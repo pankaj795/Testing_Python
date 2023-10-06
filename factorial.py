@@ -1,14 +1,24 @@
-def add_numbers(a, b):
+def factorial(n):
     """
-    This function takes two numbers as input and returns their sum.
-    """
-    return a + b
+    Calculate the factorial of a non-negative integer.
 
-def main():
-    num1 = 10
-    num2 = 20
-    result = add_numbers(num1, num2)
-    print(f"The sum of {num1} and {num2} is: {result}")
+    Args:
+        n (int): The non-negative integer for which to calculate the factorial.
+
+    Returns:
+        int: The factorial of the input integer.
+
+    Raises:
+        ValueError: If the input is a negative integer.
+    """
+    if n < 0:
+        raise ValueError("Input must be a non-negative integer.")
+    if n == 0:
+        return 1
+    else:
+        return n * factorial(n - 1)
 
 if __name__ == "__main__":
-    main()
+    n = int(input("Enter a non-negative integer: "))
+    result = factorial(n)
+    print(f"The factorial of {n} is: {result}")
