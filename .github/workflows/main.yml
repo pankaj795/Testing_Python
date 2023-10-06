@@ -1,13 +1,12 @@
-name: Pylint Check and Generate Report
+name: Lint and Commit Python Code
 
 on:
   push:
     branches:
-      - main # Change this to your main branch name
+      - main  # Change this to your main branch name
 
 jobs:
-  pylint:
-    name: Run Pylint Check
+  lint_and_commit:
     runs-on: ubuntu-latest
 
     steps:
@@ -17,42 +16,31 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
-          python-version: 3.8 # Change to your desired Python version
+          python-version: 3.8  # Change to your desired Python version
 
-      - name: Install Dependencies
+      - name: Install pylint
+        run: pip install pylint
+
+      - name: Lint Python Code
+        id: lint
         run: |
-          pip install pylint
-          pip install python-docx
+          python lint.py
+        continue-on-error: true  # Continue even if linting fails to evaluate the exit code
 
-      - name: Run Pylint
-        run: pylint factorial.py 
-
-      - name: Check Pylint Score
-        id: pylint
-        run: |
-          PYLINT_SCORE=$(pylint --output-format=json factorial.py | jq -r '.[0].global_note')
-
-          if [ $(echo "$PYLINT_SCORE >= 7" | bc -l) -eq 1 ]; then
-            echo "Pylint score is greater than or equal to 8. Commit allowed."
-          else
-            echo "Pylint score is below 8. Commit rejected."
-            exit 1
-          fi
-
-      - name: Generate Report
-        if: success()
-        run: |
-          python generate_report.py $GITHUB_SHA $PYLINT_SCORE
-
-      - name: Push to GitHub
-        if: success()
+      - name: Commit Changes
+        if: steps.lint.outputs.return-code == '0'  # Only if linting passed
         run: |
           git config --local user.name "GitHub Actions"
           git config --local user.email "actions@github.com"
-          git commit -am "Pylint score meets the threshold"
+          git add .
+          git commit -m "Linting passed. Committing changes."
           git push origin main
 
-      - name: Prevent Saving Commit ID
-        if: failure()
+      - name: Create and Attach Report
+        if: steps.lint.outputs.return-code == '0'  # Only if linting passed
         run: |
-          echo "Pylint check failed. Commit ID not saved."
+          echo "# Linting Report" > linting_report.md
+          echo "Linting passed with a score of ${{ steps.lint.outputs.return-code }}." >> linting_report.md
+          git add linting_report.md
+          git commit -m "Add linting report"
+          git push origin main
