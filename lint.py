@@ -4,7 +4,7 @@ import sys
 
 from pylint import lint
 
-THRESHOLD = 5
+THRESHOLD = 6
 
 run = lint.Run(["factorial.py"])
 
