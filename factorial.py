@@ -10,4 +10,4 @@ def factorial(n):
 if __name__ == "__main__":
     n = int(input("Enter a non-negative integer: "))
     result = factorial(n)
-    print(f"The factorial of the file emlmwelwenflenferkjnfekjfneknef nerke fnek fef emf,e fme {n} is: {result}")
+    printf(f"The factorial of the file emlmwelwenflenferkjnfekjfneknef nerke fnek fef emf,e fme {n} is: {result}")
