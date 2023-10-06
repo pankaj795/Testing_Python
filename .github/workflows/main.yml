@@ -32,7 +32,7 @@ jobs:
         run: |
           PYLINT_SCORE=$(pylint --output-format=json factorial.py | jq -r '.[0].global_note')
 
-          if [ $(echo "$PYLINT_SCORE >= 4" | bc -l) -eq 1 ]; then
+          if [ $(echo "$PYLINT_SCORE >= 7" | bc -l) -eq 1 ]; then
             echo "Pylint score is greater than or equal to 8. Commit allowed."
           else
             echo "Pylint score is below 8. Commit rejected."
