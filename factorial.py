@@ -1,16 +1,5 @@
 def factorial(n):
-    """
-    Calculate the factorial of a non-negative integer.
-
-    Args:
-        n (int): The non-negative integer for which to calculate the factorial.
-
-    Returns:
-        int: The factorial of the input integer.
-
-    Raises:
-        ValueError: If the input is a negative integer.
-    """
+   
     if n < 0:
         raise ValueError("Input must be a non-negative integer.")
     if n == 0:
