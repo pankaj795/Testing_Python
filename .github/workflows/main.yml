@@ -20,8 +20,6 @@ jobs:
 
       - name: Install pylint
         run: pip install pylint
-      - name: Install  autopep8
-        run: pip install autopep8
 
       - name: Lint Python Code
         id: lint
