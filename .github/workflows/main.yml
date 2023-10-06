@@ -33,7 +33,7 @@ jobs:
         if: steps.lint.outputs.return-code == '0'  # Only if linting passed
         run: |
           git config --local user.name "GitHub Actions"
-          git config --local user.email "actions@github.com"
+          git config --local user.email "agarwalpankaj20000@gmail.com"
           git add .
           git commit -m "Linting passed. Committing changes."
           git push origin main
