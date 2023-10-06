@@ -19,6 +19,6 @@ if __name__ == "__main__":
     num3 = int(input("Enter the third number: "))
     num1 = int(input("Enter the fourth number: "))
 
-    result = sum_of_three_numbers(num1, num2, num3,num4)
+    result = sum_of_three_numbers(num1, num2, num3,num1)
 
-    print(f"The sum of {num1}, {num2}, {num3} and {num4} is: {result}")
+    print(f"The sum of {num1}, {num2}, {num3} and {num1} is: {result}")
