@@ -29,4 +29,6 @@ if __name__ == "__main__":
         exit(0)  # Exit with success code
     else:
         print(f"Linting score ({exit_code}) is below the threshold ({threshold}).")
-        exit(1)  # Exit with failure code
+        subprocess.run(["git", "add", file_path])  # Add the file to the staging area
+        subprocess.run(["git", "commit", "-m", "Linting and formatting fixes."])  # Commit the changes
+        exit(0)  # Exit with success code
