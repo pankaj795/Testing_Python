@@ -20,7 +20,7 @@ def lint_and_fix_python_code(file_path):
 
 if __name__ == "__main__":
     file_path = "factorial.py"  # Replace with your Python file path
-    threshold = 7  # Set your linting threshold here
+    threshold = 1  # Set your linting threshold here
 
     exit_code = lint_and_fix_python_code(file_path)
 
