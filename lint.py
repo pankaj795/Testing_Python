@@ -13,7 +13,7 @@ def lint_python_code(file_path):
     return exit_code
 
 if __name__ == "__main__":
-    file_path = "your_python_file.py"  # Replace with your Python file path
+    file_path = "factorial.py"  # Replace with your Python file path
     threshold = 7  # Set your linting threshold here
 
     exit_code = lint_python_code(file_path)
