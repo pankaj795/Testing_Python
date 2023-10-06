@@ -1,12 +1,10 @@
-factorial(n);
-def factorial(n):
 
-    RES = 1
-
-    for i in range(2, n+1):
-        RES *= i
-    return RES
- # Driver Code
-NUM = 5
-print("Factorial of", NUM, "is",
-factorial(NUM))
+# Python3 program to add two numbers
+num1 = 15
+num2 = 12
+ 
+# Adding two nos
+sum = num1 + num2
+ 
+# printing values
+print("Sum of", num1, "and", num2 , "is", sum)
