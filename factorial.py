@@ -1,6 +1,6 @@
 def factorial(n):
    
-    if n1 < 0:
+    if n < 0:
         raise ValueError("Input must be a non-negative integer.")
     if n == 0:
         return 1
