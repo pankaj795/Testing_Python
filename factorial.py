@@ -1,13 +1,13 @@
-def factorial(n):
+def factorial(p):
    
     if n1 < 0:
         raise ValueError("Input must be a non-negative integer.")
-    if n == 0:
+    if p == 0:
         return 1
     else:
-        return n * factorial(n - 1)
+        return p * factorial(n - 1)
 
 if __name__ == "__main__":
-    n = int(input("Enter a non-negative integer: "))
-    result = factorial(n)
-    print(f"The factorial of {n} is: {result}")
+    p = int(input("Enter a non-negative integer: "))
+    result = factorial(p)
+    print(f"The factorial of {p} is: {result}")
