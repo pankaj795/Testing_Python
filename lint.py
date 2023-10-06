@@ -1,20 +1,26 @@
-#lint.py 
+# lint.py
+import pylint.lint
 
-import sys
+def lint_python_code(file_path):
+    # Customize pylint options as needed
+    pylint_opts = [
+        '--rcfile=pylintrc',  # Path to your pylint configuration file
+        file_path,
+    ]
+    
+    # Run pylint and return its exit code
+    exit_code = pylint.lint.Run(pylint_opts).linter.msg_status
+    return exit_code
 
-from pylint import lint
+if __name__ == "__main__":
+    file_path = "your_python_file.py"  # Replace with your Python file path
+    threshold = 7  # Set your linting threshold here
 
-THRESHOLD = 2
+    exit_code = lint_python_code(file_path)
 
-run = lint.Run(["factorial.py"])
-
-score = run.linter.stats["global_note"]
-
-if score < THRESHOLD:
-
-    print("Linter failed: Score < threshold value")
-
-    sys.exit(1)
-
-
-sys.exit(0)
+    if exit_code >= threshold:
+        print(f"Linting score ({exit_code}) is above or equal to the threshold ({threshold}).")
+        exit(0)  # Exit with success code
+    else:
+        print(f"Linting score ({exit_code}) is below the threshold ({threshold}).")
+        exit(1)  # Exit with failure code
