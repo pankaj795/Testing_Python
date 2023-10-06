@@ -1,5 +1,4 @@
 on: 
-
   push: 
 
     branches: [ main ] 
@@ -9,5 +8,8 @@ on:
     - 'factorial.py' 
 
     - 'lint.py' 
- 
+jobs: 
+    build: 
+       runs-on: ubuntu-latest 
+  
 
