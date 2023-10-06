@@ -1,28 +1,57 @@
-on: 
-  push: 
+name: Pylint Check and Generate Report
 
-    branches: [ main ] 
+on:
+  push:
+    branches:
+      - main # Change this to your main branch name
 
-    paths: 
+jobs:
+  pylint:
+    name: Run Pylint Check
+    runs-on: ubuntu-latest
 
-    - 'factorial.py' 
-    - 'lint.py' 
-jobs: 
-    build: 
-       runs-on: ubuntu-latest 
-       steps:
-       - uses: actions/checkout@v2 
-       - name: Set up Python 3.8 
-         uses: actions/setup-python@v2 
-         with: 
-          python-version: 3.8 
-       - name: Install dependencies 
-         run: | 
-            python -m pip install --upgrade pip 
-            pip install pylint 
-       - name: Lint with pylint 
-         run: | 
-           python lint.py 
-    
-  
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
 
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8 # Change to your desired Python version
+
+      - name: Install Dependencies
+        run: |
+          pip install pylint
+          pip install python-docx
+
+      - name: Run Pylint
+        run: pylint factorial.py 
+
+      - name: Check Pylint Score
+        id: pylint
+        run: |
+          PYLINT_SCORE=$(pylint --output-format=json your_python_file.py | jq -r '.[0].global_note')
+
+          if [ $(echo "$PYLINT_SCORE >= 8" | bc -l) -eq 1 ]; then
+            echo "Pylint score is greater than or equal to 8. Commit allowed."
+          else
+            echo "Pylint score is below 8. Commit rejected."
+            exit 1
+          fi
+
+      - name: Generate Report
+        if: success()
+        run: |
+          python generate_report.py $GITHUB_SHA $PYLINT_SCORE
+
+      - name: Push to GitHub
+        if: success()
+        run: |
+          git config --local user.name "GitHub Actions"
+          git config --local user.email "actions@github.com"
+          git commit -am "Pylint score meets the threshold"
+          git push
+
+      - name: Prevent Saving Commit ID
+        if: failure()
+        run: git reset --hard HEAD^
