@@ -16,24 +16,30 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v2
       with:
-        python-version: 3.9  # Specify your Python version here
+        python-version: 3.x  # Specify your Python version here
 
     - name: Install Dependencies
       run: pip install pylint PyGithub markdown
 
-    - name: Run Pylint
+    - name: Run Pylint and Store Score
       run: |
-        pylint factorial.py > pylint_report.txt
-        pylint_score=$(grep 'Your code has been rated at' pylint_report.txt | awk '{print $7}')
+        pylint factorial.py > pylint_report.txt || echo "Pylint failed to run."
+        pylint_score=$(grep 'Your code has been rated at' pylint_report.txt | awk '{print $7}' || echo "0")
         echo "Pylint Score: $pylint_score"
-        if (( $(bc <<< "$pylint_score < 6") )); then
-          echo "Pylint score is less than 6. Workflow failed."
-          exit 1
-        fi
         echo "::set-output name=score_float::${pylint_score}"
 
+    - name: Check Pylint Score
+      id: check_score
+      run: echo "::set-output name=fail::${{ steps.run_pylint.outputs.score_float < 6 }}"
+
+    - name: Fail If Score < 6
+      if: steps.check_score.outputs.fail == 'true'
+      run: |
+        echo "Pylint score is less than 6. Workflow failed."
+        exit 1
+
     - name: Commit and Push if Pylint Score > 6
-      if: ${{ success() }}
+      if: steps.check_score.outputs.fail != 'true'
       run: |
         token=${{ secrets.GITHUB_TOKEN }}
         git config user.name "GitHub Actions"
@@ -45,7 +51,7 @@ jobs:
         echo "Committed and pushed to GitHub."
 
     - name: Create Markdown Report
-      if: ${{ success() }}
+      if: steps.check_score.outputs.fail != 'true'
       run: |
         echo "## Pylint Score: $pylint_score" > pylint_report.md
         cat pylint_report.txt >> pylint_report.md
@@ -53,7 +59,7 @@ jobs:
         echo "::set-output name=markdown_report::pylint_report.md"
 
     - name: Upload Markdown Report
-      if: ${{ success() }}
+      if: steps.check_score.outputs.fail != 'true'
       uses: actions/upload-artifact@v2
       with:
         name: pylint-report
