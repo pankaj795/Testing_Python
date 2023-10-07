@@ -1,46 +1,56 @@
-name: Lint and Commit Python Code
+name: Pylint Workflow
 
 on:
   push:
     branches:
-      - main  # Change this to your main branch name
+      - main  # Change this to your main branch name if it's different
 
 jobs:
-  lint_and_commit:
+  pylint:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v2
+    - name: Checkout Code
+      uses: actions/checkout@v2
 
-      - name: Set up Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: 3.8  # Change to your desired Python version
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.10  # Specify your Python version here
 
-      - name: Install pylint
-        run: pip install pylint
+    - name: Install Dependencies
+      run: pip install pylint PyGithub markdown
 
-      - name: Lint Python Code
-        id: lint
-        run: |
-          python lint.py
-        continue-on-error: true  # Continue even if linting fails to evaluate the exit code
+    - name: Run Pylint
+      run: |
+        pylint factorial.py > pylint_report.txt
+        pylint_score=$(grep 'Your code has been rated at' pylint_report.txt | awk '{print $7}')
+        echo "Pylint Score: $pylint_score"
+        echo "::set-output name=score_float::${pylint_score}"
 
-      - name: Commit Changes
-        if: steps.lint.outputs.return-code == '0'  # Only if linting passed
-        run: |
-          git config --local user.name 'pankajagarwal'
-          git config --local user.email 'agarwalpankaj20000@gmail.com'
-          git add .
-          git commit -m "Linting passed. Committing changes."
-          git push origin main
+    - name: Commit and Push if Pylint Score > 6
+      if: ${{ steps.pylint.outputs.score_float > 6 }}
+      run: |
+        token=${{ secrets.GITHUB_TOKEN }}
+        git config user.name "GitHub Actions"
+        git config user.email "actions@github.com"
+        git checkout -b pylint-report
+        git add pylint_report.txt
+        git commit -m "Pylint report update"
+        git push --force origin pylint-report
+        echo "Committed and pushed to GitHub."
 
-      - name: Create and Attach Report
-        if: steps.lint.outputs.return-code == '0'  # Only if linting passed
-        run: |
-          echo "# Linting Report" > linting_report.md
-          echo "Linting passed with a score of ${{ steps.lint.outputs.return-code }}." >> linting_report.md
-          git add linting_report.md
-          git commit -m "Add linting report"
-          git push origin main
+    - name: Create Markdown Report
+      if: ${{ steps.pylint.outputs.score_float > 6 }}
+      run: |
+        echo "## Pylint Score: $pylint_score" > pylint_report.md
+        cat pylint_report.txt >> pylint_report.md
+        echo "Markdown report created."
+        echo "::set-output name=markdown_report::pylint_report.md"
+
+    - name: Upload Markdown Report
+      if: ${{ steps.pylint.outputs.score_float > 6 }}
+      uses: actions/upload-artifact@v2
+      with:
+        name: pylint-report
+        path: pylint_report.md
