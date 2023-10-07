@@ -16,14 +16,15 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v2
       with:
-        python-version: 3.x  # Specify your Python version here
+        python-version: 3.9  # Specify your Python version here
 
     - name: Install Dependencies
       run: pip install pylint PyGithub markdown
 
     - name: Run Pylint and Store Score
+      id: run_pylint
       run: |
-        pylint factorial.py > pylint_report.txt || echo "Pylint failed to run."
+        pylint factorial.py > pylint_report.txt || exit 0
         pylint_score=$(grep 'Your code has been rated at' pylint_report.txt | awk '{print $7}' || echo "0")
         echo "Pylint Score: $pylint_score"
         echo "::set-output name=score_float::${pylint_score}"
