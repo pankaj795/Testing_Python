@@ -42,7 +42,7 @@ jobs:
     - name: Commit and Push if Pylint Score > 6
       if: steps.check_score.outputs.fail != 'true'
       run: |
-        token=${{ secrets.GITHUBTOKEN }}
+        token=${{ secrets.TOKEN }}
         git config user.name "GitHub Actions"
         git config user.email "actions@github.com"
         git checkout -b pylint-report
