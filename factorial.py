@@ -1,17 +1,17 @@
-def sum_of_three_numbers(a, b, c):
+def sum_of_three_numbers(a, b, w):
     """
     Calculate the sum of three numbers.
 
     Args:
         a (int): The first number.
         b (int): The second number.
-        c (int): The third number.
+        w (int): The third number.
     
 
     Returns:
         int: The sum of the three numbers.
     """
-    return a + b + c 
+    return a + b + w 
 
 if __name__ == "__main__":
     num1 = int(input("Enter the first number: "))
