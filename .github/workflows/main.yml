@@ -4,8 +4,6 @@ on:
   push:
     branches:
       - main  # Change this to your main branch name if it's different
-    paths:
-      - '**.py'  # Trigger only when .py files change
 
 jobs:
   pylint:
@@ -18,7 +16,7 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v2
       with:
-        python-version: 3.9  # Specify your Python version here
+        python-version: 3.9 # Specify your Python version here
 
     - name: Install Dependencies
       run: pip install pylint PyGithub markdown
@@ -35,10 +33,16 @@ jobs:
       id: check_score
       run: echo "::set-output name=fail::${{ steps.run_pylint.outputs.score_float < 6 }}"
 
+    - name: Fail If Score < 6
+      if: steps.check_score.outputs.fail == 'true'
+      run: |
+        echo "Pylint score is less than 6. Workflow failed."
+        exit 1
+
     - name: Commit and Push if Pylint Score > 6
       if: steps.check_score.outputs.fail != 'true'
       run: |
-        token=${{ secrets.TOKEN }}
+        token=${{ secrets.GITHUB_TOKEN }}
         git config user.name "GitHub Actions"
         git config user.email "actions@github.com"
         git checkout -b pylint-report
