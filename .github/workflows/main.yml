@@ -16,7 +16,7 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v2
       with:
-        python-version: 3.9 # Specify your Python version here
+        python-version: 3.9  # Specify your Python version here
 
     - name: Install Dependencies
       run: pip install pylint PyGithub markdown
@@ -28,7 +28,6 @@ jobs:
         pylint_score=$(grep 'Your code has been rated at' pylint_report.txt | awk '{print $7}' || echo "0")
         echo "Pylint Score: $pylint_score"
         echo "::set-output name=score_float::${pylint_score}"
-
     - name: Check Pylint Score
       id: check_score
       run: echo "::set-output name=fail::${{ steps.run_pylint.outputs.score_float < 6 }}"
@@ -38,7 +37,6 @@ jobs:
       run: |
         echo "Pylint score is less than 6. Workflow failed."
         exit 1
-
     - name: Commit and Push if Pylint Score > 6
       if: steps.check_score.outputs.fail != 'true'
       run: |
@@ -50,7 +48,6 @@ jobs:
         git commit -m "Pylint report update"
         git push --force origin pylint-report
         echo "Committed and pushed to GitHub."
-
     - name: Create Markdown Report
       if: steps.check_score.outputs.fail != 'true'
       run: |
@@ -58,7 +55,6 @@ jobs:
         cat pylint_report.txt >> pylint_report.md
         echo "Markdown report created."
         echo "::set-output name=markdown_report::pylint_report.md"
-
     - name: Upload Markdown Report
       if: steps.check_score.outputs.fail != 'true'
       uses: actions/upload-artifact@v2
