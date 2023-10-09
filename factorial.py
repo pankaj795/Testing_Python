@@ -1,43 +1,24 @@
-# This is a simple Python program that follows PEP 8 guidelines for testing.
-
-def add_numbers(a, b):
+def sum_of_three_numbers(a, b, c,d):
     """
-    Add two numbers and return the result.
+    Calculate the sum of three numbers
 
     Args:
         a (int): The first number.
         b (int): The second number.
+        c (int): The third number.
+        d (int): The fourth number.
 
     Returns:
-        int: The sum of the two numbers.
-
-    Example:
-        >>> add_numbers(2, 3)
-        5
+        int: The sum of the three numbers.
     """
-    return a + b
+    return a + b + c + d
 
-def subtract_numbers(a, b):
-    """
-    Subtract two numbers and return the result.
-
-    Args:
-        a (int): The first number.
-        b (int): The second number.
-
-    Returns:
-        int: The result of subtracting b from a.
-
-    Example:
-        >>> subtract_numbers(5, 2)
-        3
-    """
-    return a - b
-
-# Test the functions
 if __name__ == "__main__":
-    result1 = add_numbers(2, 3)
-    print(f"Result of adding: {result1}")
+    num1 = int(input("Enter the first number: "))
+    num2 = int(input("Enter the second number: "))
+    num3 = int(input("Enter the third number: "))
+    num1 = int(input("Enter the fourth number: "))
 
-    result2 = subtract_numbers(5, 2)
-    print(f"Result of subtracting: {result2}")
+    result = sum_of_three_numbers(num1, num2, num3,num1)
+
+    print(f"The sum of {num1}, {num2}, {num3} and {num1} is: {result}")
