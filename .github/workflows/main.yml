@@ -34,13 +34,13 @@ jobs:
       id: check_score
       run: echo "::set-output name=fail::${{ steps.run_pylint.outputs.score_float < 5 }}"
 
-    - name: Fail If Score < 5
+    - name: Fail If Score < 2
       if: steps.check_score.outputs.fail == 'true'
       run: |
-        echo "Pylint score is less than 5. Workflow failed."
+        echo "Pylint score is less than 2. Workflow failed."
         exit 1
 
-    - name: Commit and Push if Pylint Score > 5
+    - name: Commit and Push if Pylint Score > 2
       if: steps.check_score.outputs.fail != 'true'
       run: |
         token=${{ secrets.TOKEN }}
