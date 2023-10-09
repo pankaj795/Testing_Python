@@ -5,7 +5,7 @@ def sum_of_three_numbers(a, b, c,d):
     Args:
         a (int): The first number.
         b (int): The second number.
-        c (int): The third number.
+        c (int): The third number
         d (int): The fourth number.
 
     Returns:
