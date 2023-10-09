@@ -2,14 +2,15 @@
 
 def add_numbers(a, b):
     """
-    Add two numbers and return the result.
+    Add three numbers and return the result.
 
     Args:
         a (int): The first number.
         b (int): The second number.
+        
 
     Returns:
-        int: The sum of the two numbers.
+        int: The sum of the three numbers.
 
     Example:
         >>> add_numbers(2, 3)
