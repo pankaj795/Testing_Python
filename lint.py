@@ -21,7 +21,7 @@ def lint_and_fix_python_code(file_path):
 
 if __name__ == "__main__":
     # Specify the directory containing your Python files
-    directory_path = "Testing_Python/"
+    directory_path = "/Testing_Python"
 
     # Set your linting threshold here
     threshold = 2
