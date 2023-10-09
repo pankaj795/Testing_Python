@@ -1,6 +1,7 @@
 # lint.py
 import pylint.lint
 import subprocess
+import os
 
 def lint_and_fix_python_code(file_path):
     # Customize pylint options as needed
@@ -19,16 +20,23 @@ def lint_and_fix_python_code(file_path):
     return exit_code
 
 if __name__ == "__main__":
-    file_path = "factorial.py"  # Replace with your Python file path
-    threshold = 4  # Set your linting threshold here
+    # Specify the directory containing your Python files
+    directory_path = "/Testing_python"
 
-    exit_code = lint_and_fix_python_code(file_path)
+    # Set your linting threshold here
+    threshold = 4
 
-    if exit_code >= threshold:
-        print(f"Linting score ({exit_code}) is above or equal to the threshold ({threshold}).")
-        exit(0)  # Exit with success code
-    else:
-        print(f"Linting score ({exit_code}) is below the threshold ({threshold}).")
-        subprocess.run(["git", "add", file_path])  # Add the file to the staging area
-        subprocess.run(["git", "commit", "-m", "Linting and formatting fixes."])  # Commit the changes
-        exit(0)  # Exit with success code
+    # Iterate through files in the directory
+    for filename in os.listdir(directory_path):
+        if filename.endswith(".py"):
+            file_path = os.path.join(directory_path, filename)
+            exit_code = lint_and_fix_python_code(file_path)
+            
+            print(f"Linting result for {filename}: {exit_code}")
+            
+            if exit_code >= threshold:
+                print(f"Linting score ({exit_code}) is above or equal to the threshold ({threshold}).")
+            else:
+                print(f"Linting score ({exit_code}) is below the threshold ({threshold}).")
+                subprocess.run(["git", "add", file_path])  # Add the file to the staging area
+                subprocess.run(["git", "commit", "-m", "Linting and formatting fixes."])  # Commit the changes
