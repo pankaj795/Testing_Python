@@ -1,24 +1,20 @@
-def sum_of_three_numbers(a, b, c,d):
+def calculate_sum(a, b):
     """
-    Calculate the sum of three numbers
+    Calculate the sum of two numbers.
 
     Args:
         a (int): The first number.
         b (int): The second number.
-        c (int): The third number.
-        d (int): The fourth number.
 
     Returns:
-        int: The sum of the three numbers.
+        int: The sum of the two numbers.
     """
-    return a + b + c + d
+    result = a + b
+    return result
 
 if __name__ == "__main__":
-    num1 = int(input("Enter the first number: "))
-    num2 = int(input("Enter the second number: "))
-    num3 = int(input("Enter the third number: "))
-    num1 = int(input("Enter the fourth number: "))
+    num1 = 5
+    num2 = 7
 
-    result = sum_of_three_numbers(num1, num2, num3,num1)
-
-    print(f"The sum of {num1}, {num2}, {num3} and {num1} is: {result}")
+    total = calculate_sum(num1, num2)
+    print(f"The sum of {num1} and {num2} is: {total}")
