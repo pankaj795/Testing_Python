@@ -11,7 +11,7 @@ def sum_of_three_numbers(a, b, c,d):
     Returns:
         int: The sum of the three numbers.
     """
-    return a + b + c + d
+    return a + b + c 
 
 if __name__ == "__main__":
     num1 = int(input("Enter the first number: "))
