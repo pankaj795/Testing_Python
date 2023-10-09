@@ -1,21 +1,43 @@
-# PEP 8 compliant Python code example
+# This is a simple Python program that follows PEP 8 guidelines for testing.
 
-def calculate_sum(a, b):
+def add_numbers(a, b):
     """
-    Calculate the sum of two numbers.
+    Add two numbers and return the result.
 
     Args:
         a (int): The first number.
         b (int): The second number.
 
     Returns:
-        int: The sum of the two input numbers.
-    """
-    result = a + b
-    return result
+        int: The sum of the two numbers.
 
+    Example:
+        >>> add_numbers(2, 3)
+        5
+    """
+    return a + b
+
+def subtract_numbers(a, b):
+    """
+    Subtract two numbers and return the result.
+
+    Args:
+        a (int): The first number.
+        b (int): The second number.
+
+    Returns:
+        int: The result of subtracting b from a.
+
+    Example:
+        >>> subtract_numbers(5, 2)
+        3
+    """
+    return a - b
+
+# Test the functions
 if __name__ == "__main__":
-    num1 = 10
-    num2 = 20
-    total = calculate_sum(num1, num2)
-    print(f"The sum of {num1} and {num2} is {total}")
+    result1 = add_numbers(2, 3)
+    print(f"Result of adding: {result1}")
+
+    result2 = subtract_numbers(5, 2)
+    print(f"Result of subtracting: {result2}")
