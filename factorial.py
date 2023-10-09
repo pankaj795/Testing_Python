@@ -1,6 +1,6 @@
 def sum_of_three_numbers(a, b, c,d):
     """
-    Calculate the sum of three numbers.
+    Calculate the sum of three numbers
 
     Args:
         a (int): The first number.
