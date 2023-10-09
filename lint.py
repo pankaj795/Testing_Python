@@ -21,10 +21,10 @@ def lint_and_fix_python_code(file_path):
 
 if __name__ == "__main__":
     # Specify the directory containing your Python files
-    directory_path = "Testing_python/"
+    directory_path = "Testing_Python/"
 
     # Set your linting threshold here
-    threshold = 4
+    threshold = 2
 
     # Iterate through files in the directory
     for filename in os.listdir(directory_path):
