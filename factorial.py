@@ -6,10 +6,10 @@ def add_numbers(a, b):
 
     Args:
         a (int): The first number.
-        b (int): The second number
+        b (int): The second number.
 
     Returns:
-        int: The sum of the two numbers.
+        int: The sum of the two numbers.....
 
     Example:
         >>> add_numbers(2, 3)
