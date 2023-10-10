@@ -27,21 +27,13 @@ jobs:
           python -m pip install --upgrade pip
           pip install pylint
 
-      - name: Determine Changed Files
-        id: changed_files
+      - name: List Changed Files
         run: |
-          # Get the list of changed files
-          changed_files=($(git diff --name-only origin/devops_code...HEAD))
-
-          # Set the output named "changed_files" with the list of changed files
-          echo "::set-output name=changed_files::${changed_files[*]}"
-
-      - name: Display Changed Files
-        run: |
-          # Get the list of changed files from the previous step's output
-          changed_files="${{ steps.changed_files.outputs.changed_files }}"
+          changed_files=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} -- '**.py')
           echo "Changed Files:"
-          echo "$changed_files"
+          for file in $changed_files; do
+            echo "  - $file"
+          done
 
 
           
