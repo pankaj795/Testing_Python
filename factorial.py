@@ -9,7 +9,7 @@ def add_numbers(a, b):
         b (int): The second number.
 
     Returns:
-        int: The sum of the two numbers.....
+        int: The sum of the two numbers.
 
     Example:
         >>> add_numbers(2, 3)
@@ -17,9 +17,9 @@ def add_numbers(a, b):
     """
     return a + b
 
-def subtract_numbers(a, b):
+def addition_numbers(a, b):
     """
-    Subtract two numbers and return the result.
+    addition two numbers and return the result.
 
     Args:
         a (int): The first number.
@@ -29,7 +29,7 @@ def subtract_numbers(a, b):
         int: The result of subtracting b from a.
 
     Example:
-        >>> subtract_numbers(5, 2)
+        >>> addition_numbers(5, 2)
         3
     """
     return a - b
@@ -39,5 +39,5 @@ if __name__ == "__main__":
     result1 = add_numbers(2, 3)
     print(f"Result of adding: {result1}")
 
-    result2 = subtract_numbers(5, 2)
+    result2 = addition_numbers(5, 2)
     print(f"Result of subtracting: {result2}")
