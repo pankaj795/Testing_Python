@@ -3,17 +3,17 @@ import pylint.lint
 import subprocess
 
 def lint_and_fix_python_code(file_path):
-    # Customize pylint options as needed
+    
     pylint_opts = [
         '--rcfile=pylintrc',  # Path to your pylint configuration file
         '--load-plugins', 'pylint.extensions.mccabe',
         file_path,
     ]
 
-    # Run pylint and return its exit code
+   
     exit_code = pylint.lint.Run(pylint_opts).linter.msg_status
 
-    # Automatically fix linting issues using autopep8
+    
     subprocess.run(["autopep8", "--in-place", "--aggressive", file_path])
 
     return exit_code
