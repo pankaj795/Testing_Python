@@ -15,10 +15,10 @@ jobs:
         python-version: ["3.10.4"]
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v2
 
       - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v3
+        uses: actions/setup-python@v2
         with:
           python-version: ${{ matrix.python-version }}
 
@@ -27,14 +27,23 @@ jobs:
           python -m pip install --upgrade pip
           pip install pylint
 
-      - name: List Changed Files
+      - name: Get Changed Files
+        id: get_changed_files
         run: |
           changed_files=($(git diff --name-only origin/devops_code...HEAD))
-          echo "Changed Files:"
-          for file in $changed_files; do
-            echo "  - $file"
-          done
+          echo "::set-output name=changed_files::${changed_files[*]}"
 
-
-          
-           
+      - name: Run Pylint on Changed Files
+        id: run_pylint
+        run: |
+          changed_files="${{ steps.get_changed_files.outputs.changed_files }}"
+          if [[ -n "$changed_files" ]]; then
+            for file in $changed_files; do
+              pylint "$file" > "${file}_lint_report.txt"
+              pylint_score=$(grep 'Your code has been rated at' "${file}_lint_report.txt" | awk '{print $7}' || echo "0")
+              echo "Pylint Score for $file: $pylint_score"
+              echo "::set-output name=score_float::${pylint_score}"
+            done
+          else
+            echo "No Python files changed."
+          fi
