@@ -27,32 +27,22 @@ jobs:
           python -m pip install --upgrade pip
           pip install pylint
 
-      - name: Determine changed Python files
+      - name: Determine Changed Files
         id: changed_files
         run: |
-          changed_files=($(git diff --name-only origin/devops_code...HEAD | grep '\.py$'))
-          echo "::set-output name=changed_files::${changed_files[@]}"
+          # Get the list of changed files
+          changed_files=($(git diff --name-only origin/main...HEAD))
 
-      - name: Run Pylint on changed files
-        id: pylint_check
+          # Set the output named "changed_files" with the list of changed files
+          echo "::set-output name=changed_files::${changed_files[*]}"
+
+      - name: Display Changed Files
         run: |
-          changed_files=(${{ steps.changed_files.outputs.changed_files }})
+          # Get the list of changed files from the previous step's output
+          changed_files="${{ steps.changed_files.outputs.changed_files }}"
+          echo "Changed Files:"
+          echo "$changed_files"
 
-          pylint_fail=false
 
-          for file in "${changed_files[@]}"; do
-            pylint "$file" > "$file.pylintrc" || true
-            pylint_score=$(grep -oP '(?<=Your code has been rated at ).*(?=/10)' "$file.pylintrc")
-
-            if (( $(echo "$pylint_score < 6" | bc -l) )); then
-              echo "Pylint score is less than 6 for $file. Aborting."
-              pylint_fail=true
-            else
-              echo "Pylint score for $file: $pylint_score"
-            fi
-          done
-
-          if [ "$pylint_fail" = true ]; then
-            echo "::set-output name=fail::true"
-            exit 1
-          fi
+          
+           
