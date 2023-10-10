@@ -30,8 +30,14 @@ jobs:
       - name: Determine changed Python files
         id: changed_files
         run: |
-          changed_files=($(git diff --name-only origin/devops_code...HEAD | grep '\.py$'))
-          echo "::set-output name=changed_files::${changed_files[@]}"
+          if git diff --quiet --exit-code origin/devops_code...HEAD -- '**.py'; then
+            echo "No Python file changes detected."
+            echo "::set-output name=changed_files::"
+          else
+            changed_files=($(git diff --name-only origin/devops_code...HEAD | grep '\.py$'))
+            echo "Changed Python files detected: ${changed_files[@]}"
+            echo "::set-output name=changed_files::${changed_files[@]}"
+          fi
 
       - name: Run Pylint on changed files
         id: pylint_check
@@ -40,17 +46,19 @@ jobs:
 
           pylint_fail=false
 
-          for file in "${changed_files[@]}"; do
-            pylint "$file" > "$file.pylintrc" || true
-            pylint_score=$(grep -oP '(?<=Your code has been rated at ).*(?=/10)' "$file.pylintrc")
+          if [ -n "$changed_files" ]; then
+            for file in "${changed_files[@]}"; do
+              pylint "$file" > "$file.pylintrc" || true
+              pylint_score=$(grep -oP '(?<=Your code has been rated at ).*(?=/10)' "$file.pylintrc")
 
-            if (( $(echo "$pylint_score < 6" | bc -l) )); then
-              echo "Pylint score is less than 6 for $file. Aborting."
-              pylint_fail=true
-            else
-              echo "Pylint score for $file: $pylint_score"
-            fi
-          done
+              if (( $(echo "$pylint_score < 6" | bc -l) )); then
+                echo "Pylint score is less than 6 for $file. Aborting."
+                pylint_fail=true
+              else
+                echo "Pylint score for $file: $pylint_score"
+              fi
+            done
+          fi
 
           if [ "$pylint_fail" = true ]; then
             echo "::set-output name=fail::true"
