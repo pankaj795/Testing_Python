@@ -41,17 +41,25 @@ jobs:
       - name: Run Pylint and Store Score
         id: run_pylint
         run: |
-          changed_files="${{ steps.list_changed_files.outputs.changed_files }}"
-          if [ -n "$changed_files" ]; then
-            pylint $changed_files > pylint_report.txt || exit 0
-            pylint_score=$(grep 'Your code has been rated at' pylint_report.txt | awk '{print $7}' || echo "0")
-            echo "Pylint Score: $pylint_score"
-            echo "::set-output name=score_float::${pylint_score}"
-          else
-            echo "No Python files changed."
-          fi
+             changed_files="${{ steps.list_changed_files.outputs.changed_files }}"
+             if [ -n "$changed_files" ]; then
+    
+                pylint_scores=()
+             for file in $changed_files; do
+                score=$(pylint "$file" | grep 'Your code has been rated at' | awk '{print $7}' || echo "0")
+                pylint_scores+=("$score")
+             done
 
-      - name: Display Pylint Score
-        run: |
-          echo "Pylint Score: ${{ steps.run_pylint.outputs.score_float }}"
+   
+             total_score=0
+             for score in "${pylint_scores[@]}"; do
+                 total_score=$(echo "$total_score + $score" | bc)
+             done
+             average_score=$(echo "scale=2; $total_score / ${#pylint_scores[@]}" | bc)
 
+             echo "Pylint Scores: ${pylint_scores[@]}"
+             echo "Average Pylint Score: $average_score"
+             echo "::set-output name=score_float::${average_score}"
+             else
+                echo "No Python files changed."
+             fi
