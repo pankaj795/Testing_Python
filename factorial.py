@@ -1,7 +1,6 @@
-def sum_of_three_numbers(a, b,c):
+def sum_of_three_numbers():
     print("Hello popop")
-    print("SDSD")
-    print("ddddd")
+   
     
     
     
