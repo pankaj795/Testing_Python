@@ -29,7 +29,7 @@ jobs:
 
       - name: List Changed Files
         run: |
-          changed_files=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} -- '**.py')
+          changed_files=($(git diff --name-only origin/main...HEAD))
           echo "Changed Files:"
           for file in $changed_files; do
             echo "  - $file"
