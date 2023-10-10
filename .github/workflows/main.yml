@@ -15,10 +15,10 @@ jobs:
         python-version: ["3.10.4"]
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v2  # Use v2 for better compatibility
 
       - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v3
+        uses: actions/setup-python@v2  # Use v2 for better compatibility
         with:
           python-version: ${{ matrix.python-version }}
 
@@ -27,6 +27,32 @@ jobs:
           python -m pip install --upgrade pip
           pip install pylint
 
-      
-      
-          
+      - name: Determine changed Python files
+        id: changed_files
+        run: |
+          changed_files=($(git diff --name-only origin/devops_code...HEAD | grep '\.py$'))
+          echo "::set-output name=changed_files::${changed_files[@]}"
+
+      - name: Run Pylint on changed files
+        id: pylint_check
+        run: |
+          changed_files=(${{ steps.changed_files.outputs.changed_files }})
+
+          pylint_fail=false
+
+          for file in "${changed_files[@]}"; do
+            pylint "$file" > "$file.pylintrc" || true
+            pylint_score=$(grep -oP '(?<=Your code has been rated at ).*(?=/10)' "$file.pylintrc")
+
+            if (( $(echo "$pylint_score < 6" | bc -l) )); then
+              echo "Pylint score is less than 6 for $file. Aborting."
+              pylint_fail=true
+            else
+              echo "Pylint score for $file: $pylint_score"
+            fi
+          done
+
+          if [ "$pylint_fail" = true ]; then
+            echo "::set-output name=fail::true"
+            exit 1
+          fi
