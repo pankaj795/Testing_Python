@@ -1,74 +1,70 @@
-name: Pylint Workflow
+name: Pylint Job
 
 on:
   push:
     branches:
-      - main  # Change this to your main branch name if it's different
+      - main
 
 jobs:
   pylint:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
 
     steps:
-    - name: Checkout Code
-      uses: actions/checkout@v2
+      - name: Checkout Code
+        uses: actions/checkout@v2
 
-    - name: Set up Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: 3.9 # Specify your Python version here
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.10.4
 
-    - name: Install Dependencies
-      run: pip install pylint PyGithub markdown
 
-    - name: Run Pylint and Store Score
-      id: run_pylint
-      run: |
-        pylint factorial.py > pylint_report.txt || exit 0
-        pylint_score=$(grep 'Your code has been rated at' pylint_report.txt | awk '{print $7}' || echo "0")
-        echo "Pylint Score: $pylint_score"
-        echo "::set-output name=score_float::${pylint_score}"
+      - name: Determine changed Python files
+        id: changed_files
+        run: |
+          changed_files=($(git diff --name-only origin/main...HEAD | grep '\.py$'))
+          echo "::set-output name=changed_files::${changed_files[@]}"
 
-    - name: Check Pylint Score
-      id: check_score
-      run: |
-         if [[ ${{ steps.run_pylint.outputs.score_float }} -lt 6 ]]; then
-             echo "Pylint score is less than 6. Failing the build."
-             echo "::set-output name=fail::true"
-         else
-             echo "Pylint score is 6 or higher. Proceeding with the workflow."
-             echo "::set-output name=fail::false"
-         fi
+      - name: Run Pylint and Check Score
+        id: pylint_check
+        run: |
+          changed_files=(${{ steps.changed_files.outputs.changed_files }})
+          pylint_fail=false
 
-    - name: Fail If Score < 6
-      if: steps.check_score.outputs.fail == 'true'
-      run: |
-        echo "Pylint score is less than 6. Workflow failed."
-        exit 1
+          for file in "${changed_files[@]}"; do
+            pylint_report="${file%.py}_pylint_report.txt"
+            pylint "$file" > "$pylint_report" || true
+            pylint_score=$(grep -oP '(?<=Your code has been rated at ).*(?=/10)' "$pylint_report")
 
-    - name: Commit and Push if Pylint Score > 6
-      if: steps.check_score.outputs.fail != 'true'
-      run: |
-        token=${{ secrets.TOKEN }}
-        git config user.name "GitHub Actions"
-        git config user.email "actions@github.com"
-        git checkout -b pylint-report
-        git add pylint_report.txt
-        git commit -m "Pylint report update"
-        git push --force origin pylint-report
-        echo "Committed and pushed to GitHub."
+            if (( $(echo "$pylint_score < 6" | bc -l) )); then
+              echo "Pylint score is less than 6 for $file. Aborting."
+              pylint_fail=true
+            fi
+          done
 
-    - name: Create Markdown Report
-      if: steps.check_score.outputs.fail != 'true'
-      run: |
-        echo "## Pylint Score: $pylint_score" > pylint_report.md
-        cat pylint_report.txt >> pylint_report.md
-        echo "Markdown report created."
-        echo "::set-output name=markdown_report::pylint_report.md"
+          if [ "$pylint_fail" = true ]; then
+            echo "::set-output name=fail::true"
+            exit 1
+          fi
 
-    - name: Upload Markdown Report
-      if: steps.check_score.outputs.fail != 'true'
-      uses: actions/upload-artifact@v2
-      with:
-        name: pylint-report
-        path: pylint_report.md
+      - name: Commit, Push, and Attach Report
+        if: steps.pylint_check.outputs.fail != 'true'
+        run: |
+          changed_files=(${{ steps.changed_files.outputs.changed_files }})
+
+          for file in "${changed_files[@]}"; do
+            pylint_report="${file%.py}_pylint_report.txt"
+            git config user.name "GitHub Actions"
+            git config user.email "actions@github.com"
+            git add "$file" "$pylint_report"
+            git commit -m "Pylint report update for $file"
+          done
+
+          git push origin HEAD:main
+
+      - name: Upload Pylint Reports
+        if: steps.pylint_check.outputs.fail != 'true'
+        uses: actions/upload-artifact@v2
+        with:
+          name: pylint-reports
+          path: pylint_report.md
