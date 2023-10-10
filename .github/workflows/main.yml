@@ -25,6 +25,9 @@ jobs:
       
                 git diff --name-status origin/main...HEAD
                 git status
+                 
+                git log -n 5 --pretty=oneline
+
                 changed_files=($(git diff --name-only origin/main...HEAD | grep '\.py$'))
                 echo "Changed Files: ${changed_files[@]}"
         shell: bash
