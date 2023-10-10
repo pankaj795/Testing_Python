@@ -31,7 +31,14 @@ jobs:
 
     - name: Check Pylint Score
       id: check_score
-      run: echo "::set-output name=fail::${{ steps.run_pylint.outputs.score_float < 6 }}"
+      run: |
+         if [[ ${{ steps.run_pylint.outputs.score_float }} -lt 6 ]]; then
+             echo "Pylint score is less than 6. Failing the build."
+             echo "::set-output name=fail::true"
+         else
+             echo "Pylint score is 6 or higher. Proceeding with the workflow."
+             echo "::set-output name=fail::false"
+         fi
 
     - name: Fail If Score < 6
       if: steps.check_score.outputs.fail == 'true'
