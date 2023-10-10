@@ -1,23 +1,13 @@
-# This is a simple Python program that follows PEP 8 guidelines for testing.
+# PEP 8 recommends two blank lines before top-level function or class definitions.
 
-def addition_numbers(a, b):
-    """
-    addition two numbers and return the result.
+def greet(name):
+    # PEP 8 recommends using 4 spaces for indentation (no tabs).
+    """This function greets the person passed in as a parameter."""
+    
+    # PEP 8 recommends using double quotes for docstrings.
+    print(f"Hello, {name}!")
 
-    Args:
-        a (int): The first number.
-        b (int): The second number.
-
-    Returns:
-        int: The result of subtracting b from a.
-
-    Example:
-        >>> addition_numbers(5, 2)
-        3
-    """
-    return a - b
-
-# Test the function
-
-    result2 = addition_numbers(10, 2)
-    print(f"Result of subtracting: {result2}")
+if __name__ == "__main__":
+    # PEP 8 recommends using "if __name__ == "__main__":" to guard the execution of the script.
+    name = input("Enter your name: ")
+    greet(name)
