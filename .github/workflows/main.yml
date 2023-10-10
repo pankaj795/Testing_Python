@@ -7,62 +7,25 @@ on:
     paths:
       - '**.py'
 jobs:
-  pylint:
+  build:
     runs-on: ubuntu-latest
-
+    strategy:
+      matrix:
+        python-version: ["3.8", "3.9", "3.10"]
     steps:
-    - name: Checkout Code
-      uses: actions/checkout@v2
-
-    - name: Set up Python
-      uses: actions/setup-python@v2
+    - uses: actions/checkout@v3
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v3
       with:
-        python-version: 3.9  # Specify your Python version here
-
-    - name: Install Dependencies
-      run: pip install pylint PyGithub markdown
-
-    - name: Run Pylint and Store Score
-      id: run_pylint
+        python-version: ${{ matrix.python-version }}
+    - name: Install dependencies
       run: |
-        pylint  $(find . -name "*.py") > pylint_report.txt || exit 0
-        pylint_score=$(grep 'Your code has been rated at' pylint_report.txt | awk '{print $7}' || echo "0")
-        echo "Pylint Score: $pylint_score"
-        echo "::set-output name=score_float::${pylint_score}"
-
-    - name: Check Pylint Score
-      id: check_score
-      run: echo "::set-output name=fail::${{ steps.run_pylint.outputs.score_float < 5 }}"
-
-    - name: Fail If Score < 2
-      if: steps.check_score.outputs.fail == 'true'
+        python -m pip install --upgrade pip
+        pip install pylint
+    - name: Analysing the code with pylint
       run: |
-        echo "Pylint score is less than 2. Workflow failed."
-        exit 1
+        pylint $(git ls-files '*.py')
 
-    - name: Commit and Push if Pylint Score > 2
-      if: steps.check_score.outputs.fail != 'true'
-      run: |
-        token=${{ secrets.TOKEN }}
-        git config user.name "GitHub Actions"
-        git config user.email "actions@github.com"
-        git checkout -b pylint-report
-        git add pylint_report.txt
-        git commit -m "Pylint report update"
-        git push --force origin pylint-report
-        echo "Committed and pushed to GitHub."
-
-    - name: Create Markdown Report
-      if: steps.check_score.outputs.fail != 'true'
-      run: |
-        echo "## Pylint Score: $pylint_score" > pylint_report.md
-        cat pylint_report.txt >> pylint_report.md
-        echo "Markdown report created."
-        echo "::set-output name=markdown_report::pylint_report.md"
-
-    - name: Upload Markdown Report
-      if: steps.check_score.outputs.fail != 'true'
-      uses: actions/upload-artifact@v2
-      with:
-        name: pylint-report
-        path: pylint_report.md
+     
+       
+  
