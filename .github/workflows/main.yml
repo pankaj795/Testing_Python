@@ -37,15 +37,10 @@ jobs:
             fi
           done < <(git diff --name-only origin/devops_code...HEAD)
           echo "::set-output name=changed_files::${changed_files[*]}"
+          pylint $changed_files
 
-      - name: Run Pylint on Changed Files
-        id: run_pylint
-        run: |
-          changed_files="${{ steps.get_changed_files.outputs.changed_files }}"
-          if [[ -n "$changed_files" ]]; then
-            pylint $changed_files
-          else
-            echo "No Python files changed."
+      
+            
           fi
 
       
