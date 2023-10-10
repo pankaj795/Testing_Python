@@ -32,22 +32,21 @@ jobs:
         run: |
           if git diff --quiet --exit-code origin/devops_code...HEAD -- '**.py'; then
             echo "No Python file changes detected."
-            echo "::set-output name=changed_files::"
+            echo "changed_files=" >> $GITHUB_ENV
           else
             changed_files=($(git diff --name-only origin/devops_code...HEAD | grep '\.py$'))
             echo "Changed Python files detected: ${changed_files[@]}"
-            echo "::set-output name=changed_files::${changed_files[@]}"
+            echo "changed_files=${changed_files[*]}" >> $GITHUB_ENV
           fi
 
       - name: Run Pylint on changed files
         id: pylint_check
         run: |
-          changed_files=(${{ steps.changed_files.outputs.changed_files }})
-
+          changed_files="${changed_files}"
           pylint_fail=false
 
           if [ -n "$changed_files" ]; then
-            for file in "${changed_files[@]}"; do
+            for file in $changed_files; do
               pylint "$file" > "$file.pylintrc" || true
               pylint_score=$(grep -oP '(?<=Your code has been rated at ).*(?=/10)' "$file.pylintrc")
 
@@ -61,6 +60,5 @@ jobs:
           fi
 
           if [ "$pylint_fail" = true ]; then
-            echo "::set-output name=fail::true"
             exit 1
           fi
