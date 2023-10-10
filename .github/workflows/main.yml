@@ -27,14 +27,26 @@ jobs:
           python -m pip install --upgrade pip
           pip install pylint
 
+      - name: List Changed Python Files
+        id: list_changed_files
+        run: |
+          changed_files=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} -- '**.py')
+          echo "::set-output name=changed_files::${changed_files}"
+
       - name: Run Pylint and Store Score
         id: run_pylint
         run: |
-          pylint $(git diff --name-only ${{ github.event.before }} ${{ github.sha }} -- '**.py') || exit 0
-          pylint_score=$(grep 'Your code has been rated at' pylint_report.txt | awk '{print $7}' || echo "0")
-          echo "Pylint Score: $pylint_score"
-          echo "::set-output name=score_float::${pylint_score}"
+          changed_files="${{ steps.list_changed_files.outputs.changed_files }}"
+          if [ -n "$changed_files" ]; then
+            pylint $changed_files > pylint_report.txt || exit 0
+            pylint_score=$(grep 'Your code has been rated at' pylint_report.txt | awk '{print $7}' || echo "0")
+            echo "Pylint Score: $pylint_score"
+            echo "::set-output name=score_float::${pylint_score}"
+          else
+            echo "No Python files changed."
+          fi
 
       - name: Display Pylint Score
         run: |
-           echo "Pylint Score: ${{ steps.run_pylint.outputs.score_float }}"
+          echo "Pylint Score: ${{ steps.run_pylint.outputs.score_float }}"
+
