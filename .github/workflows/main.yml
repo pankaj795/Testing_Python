@@ -67,7 +67,7 @@ jobs:
                 pylint_fail=true
               fi
             done
-
+      
             if [ "$pylint_fail" = true ]; then
               echo "At least one file has a Pylint score below the threshold. Aborting the workflow."
               exit 1
@@ -76,3 +76,14 @@ jobs:
             echo "No Python files changed."
           fi
           
+      - name: Create Markdown Report
+        run: |
+           echo "## Pylint Score: $pylint_score" > pylint_report.md
+           cat pylint_report.txt >> pylint_report.md
+           echo "Markdown report created."
+           echo "::set-output name=markdown_report::pylint_report.md"
+      - name: Upload Markdown Report
+        uses: actions/upload-artifact@v2
+        with:
+          name: pylint-report
+          path: pylint_report.md    
