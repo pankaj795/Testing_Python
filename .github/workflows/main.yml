@@ -49,7 +49,8 @@ jobs:
             for file in $changed_files; do
               
               pylint_score=$(pylint "$file" | grep 'Your code has been rated at' | awk '{print $7}' || echo "0")
-              echo "Pylint score for $file: $pylint_score"
+              pylint_score1= ($pylint_score | awk -F '/' '{print $1}' || echo "0")
+              echo "Pylint score for $file: $pylint_score1"
 
               if (( $(echo "$pylint_score >= $threshold" | bc -l) )); then
                 echo "Pylint score meets or exceeds the threshold for $file. Committing and pushing to GitHub."
