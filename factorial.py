@@ -1,22 +1,24 @@
-# Sample Python code following PEP 8
+def calculate_sum(n):
+    """
+    Calculate the sum of numbers from 1 to n.
+    
+    :param n: The upper limit of the sum.
+    :type n: int
+    :return: The sum of numbers from 1 to n.
+    :rtype: int
+    """
+    if n < 1:
+        return 0
 
-def greeting(name):
-    """This function prints a greeting message."""
-    print(f"Hello, {name}!")
-    print("pankaj")
+    total_sum = 0
+    for i in range(1, n + 1):
+        total_sum += i
 
-def add_numbers(a, b):
-    """This function adds two numbers and returns the result."""
-    return a + b
-#######################3PANKAJ AGARWAL
+    return total_sum
+
 if __name__ == "__main__":
-    person = "Alice"
-    print("Welcome to our Python program.")
-    greeting(person)
-    result = add_numbers(5, 7)
-    print(f"The sum of 5 and 7 is {result}.")
-~                                                                                                                               
-~                                                                                                                               
-~                                                                                                                               
-~                                                                                                                               
-~                                                          
+    n = int(input("Enter a positive integer: "))
+    result = calculate_sum(n)
+    print(f"The sum of numbers from 1 to {n} is: {result}")
+
+~                                                                                                               
