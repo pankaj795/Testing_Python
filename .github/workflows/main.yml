@@ -75,12 +75,12 @@ jobs:
           else
             echo "No Python files changed."
           fi
-          echo "## Pylint Score: $pylint_score" > pylint_report.md
-          cat pylint_report.txt >> pylint_report.md
+          echo "## Pylint Score: $pylint_score" > pylint_report.txt
+          
           echo "Markdown report created."
-          echo "::set-output name=markdown_report::pylint_report.md"
+          echo "::set-output name=markdown_report::pylint_report.txt"
       - name: Upload Markdown Report
         uses: actions/upload-artifact@v2
         with:
           name: pylint-report
-          path: pylint_report.md    
+          path: pylint_report.txt    
