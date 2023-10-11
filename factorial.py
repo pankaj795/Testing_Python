@@ -1,18 +1,16 @@
-'''
-    __G__ = "(G)bd249ce4"
-    logger -> main
-'''
+# Sample Python code following PEP 8
 
-from os import path, environ
-from contextlib import contextmanager
+def greeting(name):
+    """This function prints a greeting message."""
+    print(f"Hello, {name}!")
 
-@contextmanager
-def ignore_excpetion(*exceptions):
-    '''
-    catch excpetion
-    '''
-    try:
-        yield
-    except exceptions as error:
-        #print("{} {} {}".format(datetime.utcnow(), EXCLAMATION_MARK, error))
-        pass
+def add_numbers(a, b):
+    """This function adds two numbers and returns the result."""
+    return a + b
+#######################3PANKAJ AGARWAL
+if __name__ == "__main__":
+    person = "Alice"
+    print("Welcome to our Python program.")
+    greeting(person)
+    result = add_numbers(5, 7)
+    print(f"The sum of 5 and 7 is {result}.")
