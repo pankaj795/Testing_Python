@@ -49,17 +49,10 @@ jobs:
                 score=$(pylint "$file" | grep 'Your code has been rated at' | awk '{print $7}' || echo "0")
                 pylint_scores+=("$score")
              done
-
-   
-             total_score=0
-             for score in "${pylint_scores[@]}"; do
-                 total_score=$(echo "$total_score + $score" | bc)
-             done
-             average_score=$(echo "scale=2; $total_score / ${#pylint_scores[@]}" | bc)
-
              echo "Pylint Scores: ${pylint_scores[@]}"
-             echo "Average Pylint Score: $average_score"
-             echo "::set-output name=score_float::${average_score}"
+             echo "::set-output name=score_float::${pylint_score}"
              else
                 echo "No Python files changed."
              fi
+
+             
