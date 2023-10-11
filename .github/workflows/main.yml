@@ -53,7 +53,7 @@ jobs:
               if (( $(echo "$pylint_score >= $threshold" | bc -l) )); then
                 echo "Pylint score meets or exceeds the threshold for $file. Committing and pushing to GitHub."
                 # Perform the Git commit and push here
-                token=${{ secrets.TOKEN }}
+                token=${{ secrets.TOKEN1 }}
                 git config user.name "GitHub Actions"
                 git config user.email "actions@github.com"
                 git add "$file"
