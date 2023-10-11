@@ -10,11 +10,11 @@ def calculate_sum(n):
     if n < 1:
         return 0
 
-    total_sum = 0
+    total_sum1 = 0
     for i in range(1, n + 1):
-        total_sum += i
+        total_sum1 += i
 
-    return total_sum
+    return total_sum1
 
 if __name__ == "__main__":
     n = int(input("Enter a positive integer: "))
