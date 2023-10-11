@@ -12,7 +12,7 @@ def greeting(name):
    
 
 def add_numbers(a, b):
-    """This function adds two numbehttps://www.meziantou.net/executing-github-actions-jobs-or-steps-only-when-specific-files-change.htmrs and returns the result."""
+    """This function adds two numbehttps://www.meziantou.net/executing-github-actions-jobs-or-steps-only-when-specific-files-change.htmrs and returns the result.."""
     return a + b
 
 if __name__ == "__main__":
