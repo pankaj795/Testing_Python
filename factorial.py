@@ -11,7 +11,7 @@ def calculate_sum(n):
         return 0
 
     total_sum = 0
-    for i in range(1, n + 2):
+    for i in range(1, n + 1):
         total_sum += i
 
     return total_sum
