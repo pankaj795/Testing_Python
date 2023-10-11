@@ -5,13 +5,13 @@ def greeting(name):
     print(f"Hello, Pankaj!")
  
 
-def add_numbers(a1786, b):
+def add_numbers(a, b):
     """This function adds two numbers and returns the result."""
-    return a1786 + b
+    return a + b
 
 if __name__ == "__main__":
     person = "Pankaj Agarwaldjsadnskddsfskjfhdskfjhdskfjhsdkhfskdjfhdskjfhdskfhdskfhdksjfjs"
     print("Welcome to our Python program.")
     greeting(person)
-    result = add_numbers(9,10)
-    print(f"The sum of 9 and 10 is {result}.")
+    result = add_numbers(9,12)
+    print(f"The sum of 9 and 12 is {result}.")
