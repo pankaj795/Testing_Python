@@ -47,8 +47,8 @@ jobs:
             pylint_fail=false
 
             for file in $changed_files; do
-              pylint_score=$(pylint "$file"  sed -n 's/.*\([0-9]\.[0-9][0-9]*\)\/[0-9][0-9]*.*/\1/p' || echo "0")
-
+              
+              pylint_score=$(pylint "$file" | grep 'Your code has been rated at' | awk '{print $7}' || echo "0")
               echo "Pylint score for $file: $pylint_score"
 
               if (( $(echo "$pylint_score >= $threshold" | bc -l) )); then
