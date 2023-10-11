@@ -7,7 +7,7 @@ def greeting(name):
 def add_numbers(a, b):
     """This function adds two numbers and returns the result."""
     return a + b
-###########3PANKAJ AGARWAL
+########3PANKAJ AGARWAL
 if __name__ == "__main__":
     person = "Alice"
     print("Welcome to our Python program.")
