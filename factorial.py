@@ -5,9 +5,9 @@ def greeting(name):
     print(f"Hello, Pankaj!")
  
 
-def add_numbers(a, b):
+def add_numbers(a1, b):
     """This function adds two numbers and returns the result."""
-    return a + b
+    return a1 + b
 
 if __name__ == "__main__":
     person = "Alice"
