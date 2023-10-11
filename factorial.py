@@ -3,7 +3,7 @@
 def greeting(name):
     """This function prints a greeting message."""
     print(f"Hello, {name}!")
-    print(f"HIII,{name}!")
+   
 
 def add_numbers(a, b):
     """This function adds two numbers and returns the result."""
