@@ -19,13 +19,6 @@ jobs:
 
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v2  # Use v2 for better compatibility
-        with:
-          python-version: ${{ matrix.python-version }}
-      - name: Checkout Code
-        uses: actions/checkout@v2
-        with:
-         fetch-depth: 0
-
 
       - name: Install dependencies
         run: |
@@ -38,19 +31,27 @@ jobs:
           changed_files=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} -- '**.py')
           echo "::set-output name=changed_files::${changed_files}"
 
-      - name: Run Pylint and Store Score
+      - name: Run Pylint and Print "Hello" (if score > threshold)
         id: run_pylint
         run: |
-             changed_files="${{ steps.list_changed_files.outputs.changed_files }}"
-             if [ -n "$changed_files" ]; then
-    
-                pylint_scores=()
-             for file in $changed_files; do
-                score=$(pylint "$file" | grep 'Your code has been rated at' | awk '{print $7}' || echo "0")
-                pylint_scores+=("$score")
-             done
-             echo "Pylint Scores: ${pylint_scores[@]}"
-             echo "::set-output name=score_float::${pylint_score}"
-             else
-                echo "No Python files changed."
-             fi
+          changed_files="${{ steps.list_changed_files.outputs.changed_files }}"
+          threshold=6  # Set your desired threshold here
+
+          if [ -n "$changed_files" ]; then
+            pylint_scores=()
+
+            for file in $changed_files; do
+              score=$(pylint "$file" | grep 'Your code has been rated at' | awk '{print $7}' || echo "0")
+              pylint_scores+=("$score")
+            done
+
+            echo "Pylint Scores: ${pylint_scores[@]}"
+
+            for score in "${pylint_scores[@]}"; do
+              if (( $(echo "$score > $threshold" | bc -l) )); then
+                echo "Hello, Pylint score exceeds the threshold: $score"
+              fi
+            done
+          else
+            echo "No Python files changed."
+          fi
