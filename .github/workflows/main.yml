@@ -37,7 +37,7 @@ jobs:
           changed_files=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} -- '**.py')
           echo "::set-output name=changed_files::${changed_files}"
 
-      - name: Run Pylint and Print "Hello" (if score > threshold)
+      - name: Run Pylint and Print "Helloo" (if score > threshold)
         id: run_pylint
         run: |
           changed_files="${{ steps.list_changed_files.outputs.changed_files }}"
