@@ -41,13 +41,13 @@ jobs:
         id: run_pylint
         run: |
           changed_files="${{ steps.list_changed_files.outputs.changed_files }}"
-          threshold=0.111  # Set your desired threshold here
+          threshold=2  # Set your desired threshold here
 
           if [ -n "$changed_files" ]; then
             pylint_fail=false
 
             for file in $changed_files; do
-              pylint_score=$(pylint "$file" | grep 'Your code has been rated at' | awk '{print $7}' || echo "0")
+              pylint_score=$(pylint "$file" | grep 'Your code has been rated at' | awk -F '/' '{print $1}' | awk '{print $1}' || echo "0")
               echo "Pylint score for $file: $pylint_score"
 
               if (( $(echo "$pylint_score >= $threshold" | bc -l) )); then
