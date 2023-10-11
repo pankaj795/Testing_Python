@@ -37,27 +37,38 @@ jobs:
           changed_files=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} -- '**.py')
           echo "::set-output name=changed_files::${changed_files}"
 
-      - name: Run Pylint and Print "Helloo" (if score > threshold)
+      - name: Run Pylint and Store Score
         id: run_pylint
         run: |
           changed_files="${{ steps.list_changed_files.outputs.changed_files }}"
-          threshold=0.255  # Set your desired threshold here
+          threshold=6  # Set your desired threshold here
 
           if [ -n "$changed_files" ]; then
-            pylint_scores=()
+            pylint_fail=false
 
             for file in $changed_files; do
-              score=$(pylint "$file" | grep 'Your code has been rated at' | awk '{print $7}' || echo "0")
-              pylint_scores+=("$score")
-            done
+              pylint_score=$(pylint "$file" | grep 'Your code has been rated at' | awk '{print $7}' || echo "0")
+              echo "Pylint score for $file: $pylint_score"
 
-            echo "Pylint Scores: ${pylint_scores[@]}"
-
-            for score in "${pylint_scores[@]}"; do
-              if (( $(echo "$score > $threshold" | bc -l) )); then
-                echo "Hello, Pylint score exceeds the threshold: $score"
+              if (( $(echo "$pylint_score >= $threshold" | bc -l) )); then
+                echo "Pylint score meets or exceeds the threshold for $file. Committing and pushing to GitHub."
+                # Perform the Git commit and push here
+                git config user.name "GitHub Actions"
+                git config user.email "actions@github.com"
+                git add "$file"
+                git commit -m "Pylint report update for $file"
+                git push --force origin devops_code
+                echo "Committed and pushed to GitHub."
+              else
+                echo "Pylint score for $file is below the threshold. Skipping."
+                pylint_fail=true
               fi
             done
+
+            if [ "$pylint_fail" = true ]; then
+              echo "At least one file has a Pylint score below the threshold. Aborting the workflow."
+              exit 1
+            fi
           else
             echo "No Python files changed."
           fi
