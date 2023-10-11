@@ -24,7 +24,7 @@ if __name__ == "__main__":
     directory_path = "/Testing_Python"
 
     # Set your linting threshold here
-    threshold = 2
+    threshold = 9
 
     # Iterate through files in the directory
     for filename in os.listdir(directory_path):
