@@ -4,7 +4,7 @@ import subprocess
 import os
 
 def lint_and_fix_python_code(file_path):
-    # Customize pylint options as needed
+    
     pylint_opts = [
         '--rcfile=pylintrc',  # Path to your pylint configuration file
         '--load-plugins', 'pylint.extensions.mccabe',
