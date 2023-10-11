@@ -3,8 +3,7 @@
 def greeting(name):
     """This function prints a greeting message."""
     print("PANKAJ AGARWAL")
-    print("OOOOOOOO")
-    print("YYYYYY")
+    
    
 
 def add_numbers(a, b):
