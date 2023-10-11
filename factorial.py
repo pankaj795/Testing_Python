@@ -13,5 +13,5 @@ if __name__ == "__main__":
     person = "Alice"
     print("Welcome to our Python program.")
     greeting(person)
-    result = add_numbers(5, 7)
-    print(f"The sum of 5 and 7 is {result}.")
+    result = add_numbers(9,10)
+    print(f"The sum of 9 and 10 is {result}.")
