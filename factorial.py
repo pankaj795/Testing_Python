@@ -11,7 +11,7 @@ def add_numbers(a, b):
     return a + b
 
 if __name__ == "__main__":
-    person = "Pankaj"
+    person = "Pankaj Agarwal"
     print("Welcome to our Python program.")
     greeting(person)
     result = add_numbers(5, 7)
