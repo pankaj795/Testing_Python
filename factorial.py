@@ -1,8 +1,8 @@
 # Sample Python code following PEP 8
 
 def greeting(name):
-    """This function prints a greeting message."""
-    print(f"Hello, {name}!")
+    
+    print(f"Hello, Pankaj!")
 
 def add_numbers(a, b):
     """This function adds two numbers and returns the result."""
