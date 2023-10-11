@@ -52,20 +52,23 @@ jobs:
               echo "Pylint score for $file: $pylint_score"
 
               if (( $(echo "$pylint_score >= $threshold" | bc -l) )); then
-                echo "Pylint score meets or exceeds the threshold for $file. Committing and pushing to GitHub."
+                 echo "Pylint score meets or exceeds the threshold for $file. Committing and pushing to GitHub."
                  # Create a report file with the Pylint score
-                report_file="${file}_pylint_report.txt"
-                echo "Pylint Score: $pylint_score" > "$report_file"
+                 report_file="${file}_pylint_report.txt"
+                 echo "Pylint Score: $pylint_score" > "$report_file"
                 # Perform the Git commit and push here
-                token=${{ secrets.ATF }}
-                git config user.name "GitHub Actions"
-                git config user.email "actions@github.com"
-                git add "$file"
-                git push --force origin devops_code
-                echo "Committed and pushed to GitHub."
+                 token=${{ secrets.ATF }}
+                 git config user.name "GitHub Actions"
+                 git config user.email "actions@github.com"
+                 git add "$file"
+                 git push --force origin devops_code
+                 echo "Committed and pushed to GitHub."
               else
-                echo "Pylint score for $file is below the threshold. Skipping."
-                pylint_fail=true
+                 echo "Pylint score for $file is below the threshold. Skipping."
+                 pylint_fail=true
+                 # Create a report file with the Pylint score
+                 report_file="${file}_pylint_report.txt"
+                 echo "Pylint Score: $pylint_score" > "$report_file"
               fi
             done
       
