@@ -49,7 +49,7 @@ jobs:
             for file in $changed_files; do
               
               pylint_score=$(pylint "$file" | grep 'Your code has been rated at' | awk '{print $7}' || echo "0")
-              pylint_score= ($(pylint_score)) * 10
+              pylint_score= $(pylint_score) * 10
               
               echo "Pylint score for $file: $pylint_score"
 
