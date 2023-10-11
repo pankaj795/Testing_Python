@@ -1,17 +1,15 @@
 # Sample Python code following PEP 8
 
 def greeting(name):
-    
-    print(f"Hello, Pankaj!")
- 
+   print("HEELOO PANKAJ")
 
 def add_numbers(a, b):
     """This function adds two numbers and returns the result."""
     return a + b
-
+ 
 if __name__ == "__main__":
-    print("Personsdlnskfjwfwke")
+    person = "Alicehgfjsgdjsgfdsjfhgfgsfgsjgsdjsfgsdjfhgdsjdsfsf"
     print("Welcome to our Python program.")
     greeting(person)
-    result = add_numbers(9,12)
-    print(f"The sum of 9 and 12 is {result}.")
+    result = add_numbers(5, 7)
+    print(f"The sum of 5 and 7 is {result}.")
