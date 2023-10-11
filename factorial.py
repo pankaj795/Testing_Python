@@ -1,12 +1,5 @@
 def calculate_sum(n):
-    """
-    Calculate the sum of numbers from 1 to n.
-    
-    :param n: The upper limit of the sum.
-    :type n: int
-    :return: The sum of numbers from 1 to n.
-    :rtype: int
-    """
+   
     if n < 1:
         return 0
 
