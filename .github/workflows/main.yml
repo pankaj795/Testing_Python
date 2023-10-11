@@ -52,6 +52,9 @@ jobs:
 
               if (( $(echo "$pylint_score >= $threshold" | bc -l) )); then
                 echo "Pylint score meets or exceeds the threshold for $file. Committing and pushing to GitHub."
+                 # Create a report file with the Pylint score
+                report_file="${file}_pylint_report.txt"
+                echo "Pylint Score: $pylint_score" > "$report_file"
                 # Perform the Git commit and push here
                 token=${{ secrets.ATF }}
                 git config user.name "GitHub Actions"
@@ -72,3 +75,4 @@ jobs:
           else
             echo "No Python files changed."
           fi
+          
