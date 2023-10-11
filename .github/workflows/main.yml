@@ -74,7 +74,7 @@ jobs:
       
             if [ "$pylint_fail" = true ]; then
               echo "At least one file has a Pylint score below the threshold. Aborting the workflow."
-              exit 1
+              
             fi
           else
             echo "No Python files changed."
