@@ -88,7 +88,7 @@ jobs:
         if: success()
         run: |
           echo "## Pylint Report" > $target_branch/pylint_report.md
-          echo "Threshold Value: 8.0" >> $target_branch/pylint_report.md
+          echo "Threshold Value: 0.8" >> $target_branch/pylint_report.md
           git log -1 --pretty=format:"Last Commit: %h %s" >> $target_branch/pylint_report.md
           echo "Pylint workflow completed successfully." >> $target_branch/pylint_report.md
           echo "Commit SHA: ${{ github.sha }}" >> $target_branch/pylint_report.md
