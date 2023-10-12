@@ -47,7 +47,7 @@ jobs:
                 fi
 
                 echo "Target Branch: $target_branch"
-                shell: bash
+        shell: bash
 
       - name: Create Target Directory
         run: mkdir -p "$target_branch"
