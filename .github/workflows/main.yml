@@ -71,12 +71,7 @@ jobs:
                  report_file="${file}_pylint_report.txt"
                  message="The threshold Value set for the code is :i.e 8/10"
                  echo "$message" >> "$report_file"
-                 echo "Pylint Score: $pylint_score" >> "$report_file"
-        uses: actions/upload-artifact@v2
-        with:
-          name: pylint-report
-          path: pylint_report.txt   
-                 exit 1
+                 echo "Pylint Score: $pylint_score" >> "$report_file
 
                  
                  
@@ -91,8 +86,7 @@ jobs:
             echo "No Python files changed."
           fi
           echo "## Pylint Score: $pylint_score" > pylint_report.txt
-          message="The threshold Value set for the code is :i.e 8/10"
-          echo "$message" > "$report_file"
+          
           
           
           echo "Markdown report created."
