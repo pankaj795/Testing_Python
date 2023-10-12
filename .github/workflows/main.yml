@@ -71,8 +71,8 @@ jobs:
                  report_file="${file}_pylint_report.txt"
                  message="Pylint score for $file is below the threshold i.e 8/10"
                  echo "$message" >> "$report_file"
-                 echo "Pylint Score: $pylint_score" > "$report_file"
-                 echo "$message" >> "$report_file"
+                 echo "Pylint Score: $pylint_score" >> "$report_file"
+                 
                  
               fi
             done
