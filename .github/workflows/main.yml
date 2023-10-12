@@ -80,7 +80,7 @@ jobs:
                  token=${{ secrets.ATF }}
                  git config user.name "GitHub Actions"
                  git config user.email "actions@github.com"
-                 git add "$file"
+                 git add "${branch_name}/$file"
                  git commit -m "Auto-fix Pylint issues in $file"
                  git push --force origin devops_code
                  echo "Committed and pushed to GitHub."
