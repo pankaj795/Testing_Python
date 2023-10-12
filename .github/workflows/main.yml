@@ -35,10 +35,17 @@ jobs:
         run: |
           changed_files=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} -- '**.py')
           echo "::set-output name=changed_files::${changed_files}"
-     
+      - name: Determine the target branch
+        run: |
+           # Get the branch name from the ref
+             target_branch="${GITHUB_REF#refs/heads/}"
+             echo "Target Branch: $target_branch"
+        shell: bash
 
       - name: Create Target Directory
-        run: mkdir -p "${target_branch}"
+        run: mkdir -p "$target_branch"
+
+      
       - name: Run Pylint and Store Score
         id: run_pylint
         run: |
