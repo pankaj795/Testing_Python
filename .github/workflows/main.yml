@@ -69,7 +69,7 @@ jobs:
                  pylint_fail=true
                  # Create a report file with the Pylint score
                  report_file="${file}_pylint_report.txt"
-                 message="Pylint score for $file is below the threshold i.e 8/10"
+                 message="The threshold Value set for the code is :i.e 8/10"
                  echo "$message" >> "$report_file"
                  echo "Pylint Score: $pylint_score" >> "$report_file"
 
@@ -86,6 +86,9 @@ jobs:
             echo "No Python files changed."
           fi
           echo "## Pylint Score: $pylint_score" > pylint_report.txt
+          message="The threshold Value set for the code is :i.e 8/10"
+          echo "$message" >> "$report_file"
+          
           
           echo "Markdown report created."
           echo "::set-output name=markdown_report::pylint_report.txt"
