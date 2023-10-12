@@ -72,6 +72,7 @@ jobs:
                  message="The threshold Value set for the code is :i.e 8/10"
                  echo "$message" >> "$report_file"
                  echo "Pylint Score: $pylint_score" >> "$report_file"
+                 exit 1
 
                  
                  
