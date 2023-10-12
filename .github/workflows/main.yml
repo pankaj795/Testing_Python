@@ -30,27 +30,22 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install pylint
-
       - name: List Changed Python Files
         id: list_changed_files
         run: |
           changed_files=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} -- '**.py')
           echo "::set-output name=changed_files::${changed_files}"
-
       - name: Run Pylint and Store Score
         id: run_pylint
         run: |
           changed_files="${{ steps.list_changed_files.outputs.changed_files }}"
           threshold=0.8  # Set your desired threshold here
-
           if [ -n "$changed_files" ]; then
             pylint_fail=false
-
             for file in $changed_files; do
               
               pylint_score=$(pylint "$file" | grep 'Your code has been rated at' | awk '{print $7}' || echo "0")
               echo "Pylint score for $file: $pylint_score"
-
               if (( $(echo "$pylint_score >= $threshold" | bc -l) )); then
                  echo "Pylint score meets or exceeds the threshold for $file. Committing and pushing to GitHub."
                  # Create a report file with the Pylint score
@@ -71,8 +66,7 @@ jobs:
                  report_file="${file}_pylint_report.txt"
                  message="The threshold Value set for the code is :i.e 8/10"
                  echo "$message" >> "$report_file"
-                 echo "Pylint Score: $pylint_score" >> "$report_file
-
+                 echo "Pylint Score: $pylint_score" >> "$report_file"
                  
                  
               fi
@@ -86,7 +80,8 @@ jobs:
             echo "No Python files changed."
           fi
           echo "## Pylint Score: $pylint_score" > pylint_report.txt
-          
+          message="The threshold Value set for the code is :i.e 8/10"
+          echo "$message" >> "$report_file"
           
           
           echo "Markdown report created."
