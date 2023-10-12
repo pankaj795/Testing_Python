@@ -48,7 +48,7 @@ jobs:
 
                 echo "Target Branch: $target_branch"
                 mkdir -p "$target_branch"
-                touch ${branch_name}/$file
+                touch ${target_branch}/$file
         shell: bash
 
      
