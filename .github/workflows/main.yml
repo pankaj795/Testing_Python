@@ -47,10 +47,10 @@ jobs:
                 fi
 
                 echo "Target Branch: $target_branch"
+                mkdir -p "$target_branch"
         shell: bash
 
-      - name: Create Target Directory
-        run: mkdir -p "$target_branch"
+     
 
       
       - name: Run Pylint and Store Score
