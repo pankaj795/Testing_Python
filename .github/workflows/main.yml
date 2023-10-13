@@ -48,7 +48,11 @@ jobs:
 
                 echo "Target Branch: $target_branch"
                 mkdir -p "$target_branch"
-                touch ${target_branch}/$file
+                # Create the report file inside the branch-specific directory
+                report_file="${branch_name}/${file}_pylint_report.txt"
+                echo "Pylint Score: $pylint_score" > "$report_file"
+  
+                
         shell: bash
 
      
@@ -68,12 +72,7 @@ jobs:
               if (( $(echo "$pylint_score >= $threshold" | bc -l) )); then
                  echo "Pylint score meets or exceeds the threshold for $file. Committing and pushing to GitHub."
                  # Use github.ref to get the branch name that triggered the workflow
-                 branch_name=${{ github.ref }}
-                 # Remove "refs/heads/" prefix to get the clean branch name
-                 branch_name=${branch_name#refs/heads/}
-                  # Create a report file with the Pylint score in the branch's directory
-                 report_file="${branch_name}/${file}_pylint_report.txt"
-                 echo "Pylint Score: $pylint_score" > "$report_file"
+                 
 
                  
                  
@@ -82,7 +81,6 @@ jobs:
                  git config user.name "GitHub Actions"
                  git config user.email "actions@github.com"
                  git add "${branch_name}/$file"
-                 git commit -m "Auto-fix Pylint issues in $file"
                  git push --force origin devops_code
                  echo "Committed and pushed to GitHub."
               else
