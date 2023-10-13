@@ -10,7 +10,7 @@ def calculate_sum(n):
     return total_sum
 
 if __name__ == "__main__":
-    n = int(input("Enter the real number u want to createdsdkskdfkfnsdkfnsdfnsdkjfndskjfsfdsfdfeve."))
+    n = int(input("Enter the real Positive number u want to create:::::::"))
     result = calculate_sum(n)
     print(f"The sum of numbers from 1 to {n} is: {result}")
 
