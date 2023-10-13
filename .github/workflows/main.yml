@@ -2,11 +2,6 @@ name: Pylint Workflow
 
 on:
   push:
-    branches:
-      - devops_code
-      - main 
-      - Testing
-      
     paths:
       - '**.py'
 
