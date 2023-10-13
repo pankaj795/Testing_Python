@@ -57,7 +57,9 @@ jobs:
                  git config user.name "GitHub Actions"
                  git config user.email "actions@github.com"
                  git add "$file"
-                 git push --force origin devops_code
+                 branch_name="${{ github.ref }}"
+                 branch_name="${branch_name#refs/heads/}"
+                 git push --force origin $branch_name 
                  echo "Committed and pushed to GitHub."
               else
                  echo "Pylint score for $file is below the threshold. Skipping."
