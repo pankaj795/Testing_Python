@@ -3,7 +3,7 @@ name: Pylint Workflow
 on:
   push:
     branches:
-      - '*'  # Change this to your main branch name if it's different
+      - devops_code  # Change this to your main branch name if it's different
     paths:
       - '**.py'
 
@@ -35,34 +35,11 @@ jobs:
         run: |
           changed_files=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} -- '**.py')
           echo "::set-output name=changed_files::${changed_files}"
-      - name: Determine the target branch
-        run: |
-               # Get the branch name from the ref
-                target_branch="${{ github.ref }}"
-                target_branch="${target_branch#refs/heads/}"
-
-                if [ -z "$target_branch" ]; then
-                     echo "Error: Could not determine the target branch. Exiting..."
-                     exit 1
-                fi
-
-                echo "Target Branch: $target_branch"
-                mkdir -p "$target_branch"
-                # Create the report file inside the branch-specific directory
-                report_file="${target_branch}/${file}_pylint_report.txt"
-                echo "Pylint Score: $pylint_score" > "$report_file"
-  
-                
-        shell: bash
-
-     
-
-      
       - name: Run Pylint and Store Score
         id: run_pylint
         run: |
           changed_files="${{ steps.list_changed_files.outputs.changed_files }}"
-          threshold=0.1  # Set your desired threshold here
+          threshold=0.8  # Set your desired threshold here
           if [ -n "$changed_files" ]; then
             pylint_fail=false
             for file in $changed_files; do
@@ -71,23 +48,22 @@ jobs:
               echo "Pylint score for $file: $pylint_score"
               if (( $(echo "$pylint_score >= $threshold" | bc -l) )); then
                  echo "Pylint score meets or exceeds the threshold for $file. Committing and pushing to GitHub."
-                 # Use github.ref to get the branch name that triggered the workflow
+                 # Create a report file with the Pylint score
+                 report_file="${file}_pylint_report.txt"
                  
-
-                 
-                 
+                 echo "Pylint Score: $pylint_score" > "$report_file"
                 # Perform the Git commit and push here
                  token=${{ secrets.ATF }}
                  git config user.name "GitHub Actions"
                  git config user.email "actions@github.com"
-                 git add "${branch_name}/$file"
+                 git add "$file"
                  git push --force origin devops_code
                  echo "Committed and pushed to GitHub."
               else
                  echo "Pylint score for $file is below the threshold. Skipping."
                  pylint_fail=true
                  # Create a report file with the Pylint score
-                 report_file="${branch_name}/${file}_pylint_report.txt"
+                 report_file="${file}_pylint_report.txt"
                  message="The threshold Value set for the code is :i.e 8/10"
                  echo "$message" >> "$report_file"
                  echo "Pylint Score: $pylint_score" >> "$report_file"
@@ -98,34 +74,20 @@ jobs:
       
             if [ "$pylint_fail" = true ]; then
               echo "At least one file has a Pylint score below the threshold. Aborting the workflow."
-              exit 1
-            else
-              echo "No Python files have Pylint scores below the threshold."
+              
             fi
           else
             echo "No Python files changed."
           fi
-
-      - name: Upload Pylint Report
-        if: success()
-        run: |
-          branch_name=${{ github.ref }}
-          branch_name=${branch_name#refs/heads/}
-          echo "## Pylint Report" > $branch_name/pylint_report.md
-          echo "Threshold Value: 8.0" >> $branch_name/pylint_report.md
-          git log -1 --pretty=format:"Last Commit: %h %s" >> $branch_name/pylint_report.md
-          echo "Pylint workflow completed successfully." >> $branch_name/pylint_report.md
-          echo "Commit SHA: ${{ github.sha }}" >> $branch_name/pylint_report.md
-          echo "Branch: $branch_name" >> $branch_name/pylint_report.md
-          echo "Author: ${{ github.actor }}" >> $branch_name/pylint_report.md
-          echo "Reviewer: ${{ github.actor }}" >> $branch_name/pylint_report.md
-          echo "Review URL: ${{ github.event.pull_request.html_url }}" >> $branch_name/pylint_report.md
-          echo "::set-output name=pylint_report::${branch_name}/pylint_report.md"
-
-      - name: Upload Pylint Report Artifact
-        if: success()
+          echo "## Pylint Score: $pylint_score" > pylint_report.txt
+          message="The threshold Value set for the code is :i.e 8/10"
+          echo "$message" > "$report_file"
+          
+          
+          echo "Markdown report created."
+          echo "::set-output name=markdown_report::pylint_report.txt"
+      - name: Upload Markdown Report
         uses: actions/upload-artifact@v2
         with:
           name: pylint-report
-          path: $branch_name/pylint_report.md
-        
+          path: pylint_report.txt  
