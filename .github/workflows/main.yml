@@ -49,7 +49,7 @@ jobs:
                 echo "Target Branch: $target_branch"
                 mkdir -p "$target_branch"
                 # Create the report file inside the branch-specific directory
-                report_file="${branch_name}/${file}_pylint_report.txt"
+                report_file="${target_branch}/${file}_pylint_report.txt"
                 echo "Pylint Score: $pylint_score" > "$report_file"
   
                 
