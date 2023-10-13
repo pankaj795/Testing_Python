@@ -2,6 +2,9 @@ name: Generic Workflow
 
 on:
   push:
+    branches:
+      - main
+      - devops_code
     paths:
       - '**.py'
 
