@@ -5,6 +5,7 @@ on:
     branches:
       - devops_code
       - main 
+      - Testing
       
     paths:
       - '**.py'
