@@ -10,7 +10,7 @@ def calculate_sum(n):
     return total_sum
 
 if __name__ == "__main__":
-    n = int(input("Enter the positive number u want to trigger in the folliwing event tot f fnekfnengg"))
+    n = int(input("Enter the positive::::::::::::"))
     result = calculate_sum(n)
     print(f"The sum of numbers from 1 to {n} is: {result}")
 
