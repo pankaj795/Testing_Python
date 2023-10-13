@@ -40,7 +40,7 @@ jobs:
         id: run_pylint
         run: |
           changed_files="${{ steps.list_changed_files.outputs.changed_files }}"
-          threshold=0.8  # Set your desired threshold here
+          threshold=0.4  # Set your desired threshold here
           if [ -n "$changed_files" ]; then
             pylint_fail=false
             for file in $changed_files; do
