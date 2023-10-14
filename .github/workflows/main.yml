@@ -6,9 +6,8 @@ on:
       - '*'
     tags:
       - '*' 
-  repository_dispatch:
-    types: [run-pylint]  
-    
+    paths:
+      - '**.py'
 
 jobs:
   pylint:
