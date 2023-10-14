@@ -3,10 +3,10 @@ name: Generic Workflow
 on:
   push:
     branches:
-  
       - '*'
-    paths:
-      - '**.py'
+    tags:
+      - '*'  
+    
 
 jobs:
   pylint:
