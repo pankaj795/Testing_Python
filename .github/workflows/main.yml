@@ -5,7 +5,9 @@ on:
     branches:
       - '*'
     tags:
-      - '*'  
+      - '*' 
+  repository_dispatch:
+    types: [run-pylint]  
     
 
 jobs:
