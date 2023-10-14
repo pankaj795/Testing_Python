@@ -10,7 +10,7 @@ def calculate_sum(n):
     return total_sum
 
 if __name__ == "__main__":
-    n = int(input("Enter the number u want to prijnt in proper format:::::::::: ghgvggjhjghjgjhjgj::::::::::::;hgjggjgfnerfnekrnekfn"))
+    n = int(input("Enter the number u want to print in:::::::::: ghgvggjhjghjgjhjgj::::::::::::;hgjggjgfnerfnekrnekfn"))
     result = calculate_sum(n)
     print(f"The sum of numbers from 1 to {n} is: {result}")
 
