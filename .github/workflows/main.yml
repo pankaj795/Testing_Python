@@ -98,6 +98,11 @@ jobs:
           echo "Branch: ${{ github.ref }}" >> pylint_report.txt
           echo "Author: ${{ github.actor }}" >> pylint_report.txt
           echo "Reviewer: ${{ github.actor }}" >> pylint_report.txt
+          timestamp=$(date +"%Y-%m-%d %H:%M:%S")
+          commit_message="Auto-fix Pylint issues in $file at $timestamp"
+      
+          echo "Commit Message: $commit_message" >> pylint_report.txt
+
           commit_message=$(git log -1 --pretty=format:"%s")
           echo "Commit Message: $commit_message" >> pylint_report.txt
 
