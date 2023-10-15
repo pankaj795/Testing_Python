@@ -61,10 +61,6 @@ jobs:
                  branch_name="${{ github.ref }}"
                  branch_name="${branch_name#refs/heads/}"
                  git add "$file"
-                 timestamp=$(date +"%Y-%m-%d %H:%M:%S")
-                 commit_message="Auto-fix Pylint issues in $file at $timestamp"
-        
-                 git commit -m "$commit_message"
                  git push --force origin $branch_name 
                  echo "Committed and pushed to GitHub."
               else
