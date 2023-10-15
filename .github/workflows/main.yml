@@ -68,7 +68,6 @@ jobs:
                       git commit -m "$commit_message"
                    git push --force origin $branch_name
                    echo "Committed and pushed to GitHub."
-           
                  fi
                  
               else
@@ -77,10 +76,6 @@ jobs:
                  # Create a report file with the Pylint score
                  report_file="${file}_pylint_report.txt"
                  echo "Pylint Score: $pylint_score" >> "$report_file"
-                 
-                 
-                 
-                 
               fi
             done
       
