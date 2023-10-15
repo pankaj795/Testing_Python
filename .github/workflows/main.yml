@@ -65,7 +65,7 @@ jobs:
                  do
                        change_summary=$(git diff --cached --name-only --diff-filter=AM --stat "$changed_file" | tail -1)
                        commit_message="Auto-fix Pylint issues in $changed_file: $change_summary"
-                       git commit -m "$commit_message"
+                       git commit -m "$commit_message" 
                  done
                  git push --force origin $branch_name 
                  echo "Committed and pushed to GitHub."
@@ -91,7 +91,7 @@ jobs:
           fi
           
           
-          echo "## Pylint Score: $pylint_score" > pylint_report.txt
+          echo "## Pylint Score: $pylint_score" >> pylint_report.txt
           message="The threshold Value set for the code is :i.e 8/10"
           echo "$message" >> pylint_report.txt
           git log -1 --pretty=format:"Last Commit: %h %s" >> pylint_report.txt
@@ -100,12 +100,9 @@ jobs:
           echo "Branch: ${{ github.ref }}" >> pylint_report.txt
           echo "Author: ${{ github.actor }}" >> pylint_report.txt
           echo "Reviewer: ${{ github.actor }}" >> pylint_report.txt
-          git diff --cached --name-only --diff-filter=AM | while read -r changed_file
-                 do
-                       change_summary=$(git diff --cached --name-only --diff-filter=AM --stat "$changed_file" | tail -1)
-                       commit_message="Auto-fix Pylint issues in $changed_file: $change_summary"
-                       git commit -m "$commit_message" >> pylint_report.txt
-                 done
+          commit_message=$(git log -2 --pretty=format:"%s")
+          echo "Commit Message: $commit_message" >> pylint_report.txt
+
           
           if [ "$pylint_fail" = true ]; then
               echo "Pylint score for $file is below the threshold.Code Failed !!!!" >> pylint_report.txt
