@@ -110,5 +110,3 @@ jobs:
         if: steps.run_pylint.outputs.upload_failed == 'true' && steps.run_pylint.outputs.pylint_fail == 'true'
         run: |
             echo "The code failed to upload." >> pylint_report.txt
-     
-     
