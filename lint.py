@@ -26,7 +26,7 @@ if __name__ == "__main__":
     # Set your linting threshold here
     threshold = 8
 
-    # Iterate through files in the directory ovver all the directory................hjgjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjh
+    # Iterate through files in the directory ovver all the directory............nhibkjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj....hjgjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjh
     for filename in os.listdir(directory_path):
         if filename.endswith(".py"):
             file_path = os.path.join(directory_path, filename)
