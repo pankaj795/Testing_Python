@@ -93,7 +93,7 @@ jobs:
           echo "Branch: ${{ github.ref }}" >> pylint_report.txt
           echo "Author: ${{ github.actor }}" >> pylint_report.txt
           echo "Reviewer: ${{ github.actor }}" >> pylint_report.txt
-          if (( $(echo "$pylint_score <= $threshold" | bc -l) )); then
+          if [ "$pylint_fail" = true ]; then
               echo "Pylint score for $file is below the threshold.Code Failed !!!!" >> pylint_report.txt
               
           
