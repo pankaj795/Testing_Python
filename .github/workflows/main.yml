@@ -17,10 +17,10 @@ jobs:
         python-version: ["3.10.4"]
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v2  
+        uses: actions/checkout@v2  # Use v2 for better compatibility
 
       - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v2  
+        uses: actions/setup-python@v2  # Use v2 for better compatibility
         with:
           python-version: ${{ matrix.python-version }}
       - name: Checkout Code
@@ -55,27 +55,24 @@ jobs:
                  
                  echo "Pylint Score: $pylint_score" > "$report_file"
                 # Perform the Git commit and push here
-                 if [ "$pylint_fail" = false ]; then
-                   token=${{ secrets.ATF }}
-                   git config user.name "GitHub Actions"
-                   git config user.email "actions@github.com"
-                   git add "$file"
-                   branch_name="${{ github.ref }}"
-                   branch_name="${branch_name#refs/heads/}"
-                   git diff --cached --name-only --diff-filter=AM | while read -r changed_file; do
-                      change_summary=$(git diff --cached --name-only --diff-filter=AM --stat "$changed_file" | tail -1)
-                      commit_message="Auto-fix Pylint issues in $changed_file: $change_summary"
-                      git commit -m "$commit_message"
-                   git push --force origin $branch_name
-                   echo "Committed and pushed to GitHub."
-                 fi
-                 
+                 token=${{ secrets.ATF }}
+                 git config user.name "GitHub Actions"
+                 git config user.email "actions@github.com"
+                 git add "$file"
+                 branch_name="${{ github.ref }}"
+                 branch_name="${branch_name#refs/heads/}"
+                 git push --force origin $branch_name 
+                 echo "Committed and pushed to GitHub."
               else
                  echo "Pylint score for $file is below the threshold. Skipping."
                  pylint_fail=true
                  # Create a report file with the Pylint score
                  report_file="${file}_pylint_report.txt"
                  echo "Pylint Score: $pylint_score" >> "$report_file"
+                 
+                 
+                 
+                 
               fi
             done
       
@@ -113,4 +110,5 @@ jobs:
         if: steps.run_pylint.outputs.upload_failed == 'true' && steps.run_pylint.outputs.pylint_fail == 'true'
         run: |
             echo "The code failed to upload." >> pylint_report.txt
+     
      
