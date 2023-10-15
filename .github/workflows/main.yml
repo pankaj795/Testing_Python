@@ -68,9 +68,9 @@ jobs:
                  pylint_fail=true
                  # Create a report file with the Pylint score
                  report_file="${file}_pylint_report.txt"
-                 message="The threshold Value set for the code is :i.e 8/10"
-                 echo "$message" >> "$report_file"
                  echo "Pylint Score: $pylint_score" >> "$report_file"
+                 echo "Pylint score for $file is below the threshold.Code Failed !!!!" > pylint_report.txt
+                 
                  
                  
               fi
@@ -88,7 +88,7 @@ jobs:
           echo "$message" > pylint_report.txt
           echo "## Pylint Score: $pylint_score" >> pylint_report.txt
           git log -1 --pretty=format:"Last Commit: %h %s" >> pylint_report.txt
-          echo "Pylint workflow completed successfully." >> pylint_report.txt 
+          echo >> pylint_report.txt 
           echo "Commit SHA: ${{ github.sha }}" >> pylint_report.txt
           echo "Branch: ${{ github.ref }}" >> pylint_report.txt
           echo "Author: ${{ github.actor }}" >> pylint_report.txt
