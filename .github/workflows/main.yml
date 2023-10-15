@@ -100,7 +100,7 @@ jobs:
           echo "Branch: ${{ github.ref }}" >> pylint_report.txt
           echo "Author: ${{ github.actor }}" >> pylint_report.txt
           echo "Reviewer: ${{ github.actor }}" >> pylint_report.txt
-          commit_message=$(git log -2 --pretty=format:"%s")
+          commit_message=$(git log -1 --pretty=format:"%s")
           echo "Commit Message: $commit_message" >> pylint_report.txt
 
           
@@ -117,8 +117,4 @@ jobs:
           name: pylint-report
           path: pylint_report.txt 
 
-      - name: Check Upload Failure
-        if: steps.run_pylint.outputs.upload_failed == 'true' && steps.run_pylint.outputs.pylint_fail == 'true'
-        run: |
-            echo "The code failed to upload." >> pylint_report.txt
-     
+      
