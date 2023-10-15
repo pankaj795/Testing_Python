@@ -61,6 +61,10 @@ jobs:
                  git add "$file"
                  branch_name="${{ github.ref }}"
                  branch_name="${branch_name#refs/heads/}"
+                 git diff --cached --name-only --diff-filter=AM | while read -r changed_file; do
+                 change_summary=$(git diff --cached --name-only --diff-filter=AM --stat "$changed_file" | tail -1)
+                 commit_message="Auto-fix Pylint issues in $changed_file: $change_summary"
+                 git commit -m "$commit_message"
                  git push --force origin $branch_name 
                  echo "Committed and pushed to GitHub."
               else
