@@ -10,7 +10,7 @@ def calculate_sum(n):
     return total_sum
 
 if __name__ == "__main__"
-    n = int(input("Enter positive u want for positive number u want to stabjbjbhjbjbjbbhjjhbjbjbhjrt in tSASASaaaaaaaojijijijijijiujijhe previous seriedcmdkmkfeffvfv commanf vhgjhghjgjgkg:"))
+    n = int(input("Enter positive u want gguyuyyyyyyyyyyyyyyyyyyy in tSASASaaaaaaaojijijijijijiujijhe previous seriedcmdkmkfeffvfv commanf vhgjhghjgjgkg:"))
     result = calculate_sum(n)
     print(f"The sum of numbers from 1 to {n} is: {result}")
 
