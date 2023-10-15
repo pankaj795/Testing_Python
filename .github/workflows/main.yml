@@ -95,7 +95,7 @@ jobs:
           echo "Reviewer: ${{ github.actor }}" >> pylint_report.txt
           if [ "$pylint_fail" = true ]; then
               echo "Pylint score for $file is below the threshold.Code Failed !!!!" >> pylint_report.txt
-              
+          fi
           
           
           echo "Markdown report created."
