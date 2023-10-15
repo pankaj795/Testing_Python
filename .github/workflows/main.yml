@@ -45,8 +45,10 @@ jobs:
           if [ -n "$changed_files" ]; then
             pylint_fail=false
             for file in $changed_files; do
-              
-              pylint_score=$(pylint "$file" | grep 'Your code has been rated at' | awk '{print $7}' || echo "0")
+               
+              pylint_output=$(pylint "$file")
+              echo "$pylint_output"
+              pylint_score=$(echo "$pylint_output" | grep 'Your code has been rated at' | awk '{print $7}' || echo "0")
               echo "Pylint score for $file: $pylint_score"
               if (( $(echo "$pylint_score >= $threshold" | bc -l) )); then
                  echo "Pylint score meets or exceeds the threshold for $file. Committing and pushing to GitHub."
