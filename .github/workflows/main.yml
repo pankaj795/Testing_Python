@@ -86,7 +86,7 @@ jobs:
           
           message="The threshold Value set for the code is :i.e 8/10"
           echo "$message" > pylint_report.txt
-          echo "**Pylint Score**": "$pylint_score" >> pylint_report.txt
+          echo "Pylint Score: $pylint_score" >> pylint_report.txt
           last_commit_info=$(git log -2 --pretty=format:"Last Commit: %h %s")
           echo "$last_commit_info" >> pylint_report.txt 
           echo "Commit SHA: ${{ github.sha }}" >> pylint_report.txt
