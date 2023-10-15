@@ -45,10 +45,8 @@ jobs:
           if [ -n "$changed_files" ]; then
             pylint_fail=false
             for file in $changed_files; do
-               
-              pylint_output=$(pylint "$file")
-              echo "$pylint_output"
-              pylint_score=$(echo "$pylint_output" | grep 'Your code has been rated at' | awk '{print $7}' || echo "0")
+              
+              pylint_score=$(pylint "$file" | grep 'Your code has been rated at' | awk '{print $7}' || echo "0")
               echo "Pylint score for $file: $pylint_score"
               if (( $(echo "$pylint_score >= $threshold" | bc -l) )); then
                  echo "Pylint score meets or exceeds the threshold for $file. Committing and pushing to GitHub."
@@ -91,7 +89,7 @@ jobs:
           fi
           
           
-          echo "## Pylint Score: $pylint_score" > pylint_report.txt
+          echo "## Pylint Score: $pylint_score" >> pylint_report.txt
           message="The threshold Value set for the code is :i.e 8/10"
           echo "$message" >> pylint_report.txt
           git log -1 --pretty=format:"Last Commit: %h %s" >> pylint_report.txt
@@ -120,6 +118,4 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: pylint-report
-          path: pylint_report.txt 
-
-      
+          path: pylint_report.txt   
