@@ -42,11 +42,18 @@ jobs:
         run: |
           changed_files="${{ steps.list_changed_files.outputs.changed_files }}"
           threshold=0.8  # Set your desired threshold here
-          if [ -n "$changed_files" ]; then
-            pylint_fail=false
-            for file in $changed_files; do
-              
-              pylint_score=$(pylint "$file" | grep 'Your code has been rated at' | awk '{print $7}' || echo "0")
+          for file in $changed_files; do
+              pylint_output=$(pylint "$file")  # Capture the full Pylint output
+              pylint_score=""
+            # Search for the score in the Pylint output
+              if [[ $pylint_output =~ Your\ code\ has\ been\ rated\ at\ ([-+]?[0-9]*\.?[0-9]+) ]]; then
+                 pylint_score="${BASH_REMATCH[1]}"
+              fi
+
+              if [ -z "$pylint_score" ]; then
+                pylint_score="0"  # Set a default score if not found
+              fi
+
               echo "Pylint score for $file: $pylint_score"
               if (( $(echo "$pylint_score >= $threshold" | bc -l) )); then
                  echo "Pylint score meets or exceeds the threshold for $file. Committing and pushing to GitHub."
