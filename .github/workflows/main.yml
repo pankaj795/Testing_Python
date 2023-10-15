@@ -89,7 +89,6 @@ jobs:
           echo "## Pylint Score: $pylint_score" >> pylint_report.txt
           last_commit_info=$(git log -2 --pretty=format:"Last Commit: %h %s")
           echo "$last_commit_info" >> pylint_report.txt
-          git log -1 --pretty=format:"Last Commit: %h %s" >> pylint_report.txt
           echo >> pylint_report.txt 
           echo "Commit SHA: ${{ github.sha }}" >> pylint_report.txt
           echo "Branch: ${{ github.ref }}" >> pylint_report.txt
