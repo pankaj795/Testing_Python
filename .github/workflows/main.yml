@@ -53,7 +53,7 @@ jobs:
                  # Create a report file with the Pylint score
                  report_file="${file}_pylint_report.txt"
                  
-                 echo "Pylint Score: $pylint_score" > "$report_file"
+                 echo "Pylint Score: $pylint_score"
                 # Perform the Git commit and push here
                  token=${{ secrets.ATF }}
                  git config user.name "GitHub Actions"
@@ -89,7 +89,7 @@ jobs:
           fi
           
           
-          echo "## Pylint Score: $pylint_score" >> pylint_report.txt
+          echo "## Pylint Score: $pylint_score" > pylint_report.txt
           message="The threshold Value set for the code is :i.e 8/10"
           echo "$message" >> pylint_report.txt
           git log -1 --pretty=format:"Last Commit: %h %s" >> pylint_report.txt
