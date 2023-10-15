@@ -83,10 +83,11 @@ jobs:
           else
             echo "No Python files changed."
           fi
-          echo "## Pylint Score: $pylint_score" > pylint_report.txt
+          
           message="The threshold Value set for the code is :i.e 8/10"
           echo "$message" >> pylint_report.txt
-    
+          echo "## Pylint Score: $pylint_score" > pylint_report.txt
+          echo "git log -1 --pretty format:"Last Commit: %h %s" >> pylint_report.txt
           echo "Pylint workflow completed successfully." >> pylint_report.txt 
           echo "Commit SHA: ${{ github.sha }}" >> pylint_report.txt
           echo "Branch: ${{ github.ref }}" >> pylint_report.txt
