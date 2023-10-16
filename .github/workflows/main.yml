@@ -91,11 +91,14 @@ jobs:
           echo "Author: ${{ github.actor }}" >> pylint_report.txt
           echo "Reviewer: ${{ github.actor }}" >> pylint_report.txt
           echo "Code Quality:" >> pylint_report.txt
-          echo "Benchmark: 8" >> pylint_report.txt
-          echo "Code_Score: $pylint_score" >> pylint_report.txt
-          if [ "$pylint_fail" = true ]; then
-              echo "Check Status: Fail" >> pylint_report.txt
-          fi
+          {
+             echo "Benchmark: 8"
+             echo "Code_Score: $pylint_score"
+             if [ "$pylint_fail" = true ]; then
+                  echo "Check Status: Fail"
+             fi
+          } >> pylint_report.txt
+
           
           
           
