@@ -86,8 +86,9 @@ jobs:
           
           echo "## EDR Linter and Formatter" >> pylint_report.txt
           echo "Branch: ${{ github.ref }}" >> pylint_report.txt
-          git log -1 --pretty=format:"This Commit: %h %s" >> pylint_report.txt
-          echo "" >> pylint_report.txt
+          echo "Commit chain:" >> pylint_report.txt
+          git log -n 3 --pretty=format:"%h %s" >> pylint_report.txt
+          echo "==========" >> pylint_report.txt
           echo "Author: ${{ github.actor }}" >> pylint_report.txt
           echo "Reviewer: ${{ github.actor }}" >> pylint_report.txt
           echo "Code Quality:" >> pylint_report.txt
