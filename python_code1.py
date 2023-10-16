@@ -16,7 +16,7 @@ dtype = 'bfloat16' if torch.cuda.is_available() and torch.cuda.is_bf16_supported
 compile = True 
 profile = False 
 exec(open('configurator.py').read())
-# -----------------------------------------------------------------------------
+
 
 torch.manual_seed(seed)
 torch.cuda.manual_seed(seed)
