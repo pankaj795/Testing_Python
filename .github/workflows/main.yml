@@ -90,6 +90,7 @@ jobs:
           echo "==========" >> pylint_report.txt
           echo "Commit chain:" >> pylint_report.txt
           git log -n 3 --pretty=format:"- %h %s" >> pylint_report.txt
+          echo "" >> pylint_report.txt
           echo "==========" >> pylint_report.txt
           echo "Files changed in latest commit:" >> pylint_report.txt
           echo "$file" >> pylint_report.txt
