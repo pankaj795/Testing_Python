@@ -70,9 +70,9 @@ if profile:
         on_trace_ready=torch.profiler.tensorboard_trace_handler('./bench_log'),
         record_shapes=False,
         profile_memory=False,
-        with_stack=False, # incurs an additional overhead, disable if not needed
+        with_stack=False, 
         with_flops=True,
-        with_modules=False, # only for torchscript models atm
+        with_modules=False, 
     ) as prof:
 
         X, Y = get_batch('train')
