@@ -86,13 +86,12 @@ if profile:
             lossf = loss.item()
             print(f"{k}/{num_steps} loss: {lossf:.4f}")
 
-            prof.step() # notify the profiler at end of each step
-
+            prof.step() 
 else:
 
     # simple benchmarking
     torch.cuda.synchronize()
-    for stage, num_steps in enumerate([10, 20]): # burnin, then benchmark
+    for stage, num_steps in enumerate([10, 20]): 
         t0 = time.time()
         X, Y = get_batch('train')
         for k in range(num_steps):
