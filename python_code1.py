@@ -12,7 +12,7 @@ block_size = 4096
 real_data = True
 seed = 1337
 device = 'cuda' 
-dtype = 'bfloat16' if torch.cuda.is_available() and torch.cuda.is_bf16_supported() else 'float16' # 'float32' or 'bfloat16' or 'float16'
+dtype = 'bfloat16' if torch.cuda.is_available() and torch.cuda.is_bf16_supported() else 'float16'
 compile = True 
 profile = False 
 exec(open('configurator.py').read())
