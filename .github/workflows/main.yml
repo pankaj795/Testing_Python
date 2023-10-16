@@ -83,20 +83,20 @@ jobs:
           else
             echo "No Python files changed."
           fi
-          
-          echo "## EDR Linter and Formatter" >> pylint_report.txt
-          echo "Branch: ${{ github.ref }}" >> pylint_report.txt
-          echo "==========" >> pylint_report.txt
-          echo "Commit chain:" >> pylint_report.txt
-          git log -n 3 --pretty=format:"- %h %s" >> pylint_report.txt
-          echo "" >> pylint_report.txt
-          echo "==========" >> pylint_report.txt
-          echo "Files changed in latest commit:" >> pylint_report.txt
-          echo "$file" >> pylint_report.txt
-          echo "==========" >> pylint_report.txt
-          echo "Author: ${{ github.actor }}" >> pylint_report.txt
-          echo "Reviewer: ${{ github.actor }}" >> pylint_report.txt
-          echo "Code Quality:" >> pylint_report.txt
+          report_filename="pylint_report.txt"
+          echo "## EDR Linter and Formatter" >> "$report_filename"
+          echo "Branch: ${{ github.ref }}" >> "$report_filename"
+          echo "==========" >> "$report_filename"
+          echo "Commit chain:" >> "$report_filename"
+          git log -n 3 --pretty=format:"- %h %s" >> "$report_filename"
+          echo "" >> "$report_filename"
+          echo "==========" >> "$report_filename"
+          echo "Files changed in latest commit:" >> "$report_filename"
+          echo "$file" >> "$report_filename"
+          echo "==========" >> "$report_filename"
+          echo "Author: ${{ github.actor }}" >> "$report_filename"
+          echo "Reviewer: ${{ github.actor }}" >> "$report_filename"
+          echo "Code Quality:" >> "$report_filename"
           {
              echo "    Benchmark: 8"
              echo "    Code_Score: $pylint_score"
