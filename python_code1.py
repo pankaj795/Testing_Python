@@ -46,9 +46,9 @@ else:
 
 # model init
 gptconf = GPTConfig(
-    block_size = block_size, # how far back does the model look? i.e. context size
-    n_layer = 12, n_head = 12, n_embd = 768, # size of the model
-    dropout = 0, # for determinism
+    block_size = block_size, 
+    n_layer = 12, n_head = 12, n_embd = 768, 
+    dropout = 0,
     bias = bias,
 )
 model = GPT(gptconf)
