@@ -8,7 +8,8 @@ import torch.nn as nn
 from torch.nn import functional as F
 
 class LayerNorm(nn.Module):
-    """ L an optional bias. PyTorch doesn't support simply bias=False saaaa """
+    
+    
 
     def __init__(self, ndim, bias):
         super().__init__()
