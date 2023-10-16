@@ -39,7 +39,7 @@ if real_data:
         x, y = x.pin_memory().to(device, non_blocking=True), y.pin_memory().to(device, non_blocking=True)
         return x, y
 else:
-    # alternatively, if fixed data is desired to not care about data loading
+    
     x = torch.randint(50304, (batch_size, block_size), device=device)
     y = torch.randint(50304, (batch_size, block_size), device=device)
     get_batch = lambda split: (x, y)
