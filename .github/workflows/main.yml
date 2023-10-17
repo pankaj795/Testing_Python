@@ -59,7 +59,7 @@ jobs:
               
               # Append the score to the scores string
               scores="$scores\n$file: $pylint_score"
-          done   
+           
             if [ "$pylint_fail" = true ]; then
               echo "At least one file has a Pylint score below the threshold. Aborting the workflow."
             else
