@@ -1,118 +1,96 @@
-name: Generic Workflow
+name: Pylint Check
 
 on:
   push:
-    branches:
-      - '*'
-    tags:
-      - '*' 
     paths:
       - '**.py'
 
 jobs:
-  pylint:
-    runs-on: ubuntu-22.04
-    strategy:
-      matrix:
-        python-version: ["3.10.4"]
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v2  # Use v2 for better compatibility
+  pylint_check:
+    runs-on: ubuntu-latest
 
-      - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v2  # Use v2 for better compatibility
-        with:
-          python-version: ${{ matrix.python-version }}
-      - name: Checkout Code
+    steps:
+      - name: Checkout code
         uses: actions/checkout@v2
-        with:
-         fetch-depth: 0
 
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install pylint
+
       - name: List Changed Python Files
         id: list_changed_files
         run: |
           changed_files=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} -- '**.py')
           echo "::set-output name=changed_files::${changed_files}"
-      - name: Run Pylint and Store Score
+
+      - name: Run Pylint and Store Scores
         id: run_pylint
         run: |
           changed_files="${{ steps.list_changed_files.outputs.changed_files }}"
-          threshold=0.8  # Set your desired threshold here
+          threshold=0.8
+          pylint_fail=false
+          report_file="pylint_report.txt"
+          scores=()
+
           if [ -n "$changed_files" ]; then
-            pylint_fail=false
             for file in $changed_files; do
-              
               pylint_score=$(pylint "$file" | grep 'Your code has been rated at' | awk '{print $7}' || echo "0")
               echo "Pylint score for $file: $pylint_score"
+
               if (( $(echo "$pylint_score >= $threshold" | bc -l) )); then
-                 echo "Pylint score meets or exceeds the threshold for $file. Committing and pushing to GitHub."
-                 # Create a report file with the Pylint score
-                 report_file="${file}_pylint_report.txt"
-                 
-                 echo "Pylint Score: $pylint_score" > "$report_file"
-                # Perform the Git commit and push here
-                 token=${{ secrets.ATF }}
-                 git config user.name "GitHub Actions"
-                 git config user.email "actions@github.com"
-                 branch_name="${{ github.ref }}"
-                 branch_name="${branch_name#refs/heads/}"
-                 git add "$file"
-                 git push --force origin $branch_name 
-                 echo "Committed and pushed to GitHub."
+                echo "Pylint score meets or exceeds the threshold for $file."
               else
-                 echo "Pylint score for $file is below the threshold. Skipping."
-                 pylint_fail=true
-                 # Create a report file with the Pylint score
-                 report_file="${file}_pylint_report.txt"
-                 echo "Pylint Score: $pylint_score" >> "$report_file"
-                 
-                 
-                 
-                 
-              fi
+                echo "Pylint score for $file is below the threshold. Skipping."
+                pylint_fail=true
+              }
+
+              # Add the score to the array
+              scores+=("$file: $pylint_score")
             done
-      
+
             if [ "$pylint_fail" = true ]; then
               echo "At least one file has a Pylint score below the threshold. Aborting the workflow."
-              
+            else
+              echo "All files meet or exceed the threshold. Committing and pushing to GitHub."
+              # Add and commit all changed Python files
+              token=${{ secrets.ATF }}
+              git config user.name "GitHub Actions"
+              git config user.email "actions@github.com"
+              branch_name="${{ github.ref }}"
+              branch_name="${branch_name#refs/heads/}"
+              git add $changed_files
+  
+              git push origin ${{ github.ref }}
             fi
           else
             echo "No Python files changed."
           fi
-          report_filename="pylint_report.txt"
-          echo "## EDR Linter and Formatter" >> "$report_filename"
-          echo "Branch: ${{ github.ref }}" >> "$report_filename"
-          echo "==========" >> "$report_filename"
-          echo "Commit chain:" >> "$report_filename"
-          git log -n 3 --pretty=format:"- %h %s" >> "$report_filename"
-          echo "" >> "$report_filename"
-          echo "==========" >> "$report_filename"
-          echo "Files changed in latest commit:" >> "$report_filename"
-          echo "$file" >> "$report_filename"
-          echo "==========" >> "$report_filename"
-          echo "Author: ${{ github.actor }}" >> "$report_filename"
-          echo "Reviewer: ${{ github.actor }}" >> "$report_filename"
-          echo "Code Quality:" >> "$report_filename"
-          {
-             echo "    Benchmark: 8"
-             echo "    Code_Score: $pylint_score"
-             if [ "$pylint_fail" = true ]; then
-                  echo "    Check Status: Fail"
-             fi
-          } >> pylint_report.txt
 
-          
-          
-          
-          
+          # Create the report including all scores
+          echo "## EDR Linter and Formatter" > "$report_file"
+          echo "Branch: ${{ github.ref }}" >> "$report_file"
+          echo "==========" >> "$report_file"
+          echo "Commit chain:" >> "$report_file"
+          git log -n 3 --pretty=format:"- %h %s" >> "$report_file"
+          echo "" >> "$report_file"
+          echo "==========" >> "$report_file"
+          echo "Files changed in the latest commit:" >> "$report_file"
+          cat "$changed_files" >> "$report_file"
+          echo "==========" >> "$report_file"
+          echo "Author: ${{ github.actor }}" >> "$report_file"
+          echo "Reviewer: ${{ github.actor }}" >> "$report_file"
+          echo "Code Quality:" >> "$report_file"
+          echo "Benchmark: $threshold" >> "$report_file"
+          echo "Scores:" >> "$report_file"
+          for score in "${scores[@]}"; do
+            echo "    $score" >> "$report_file"
+          done
+
           echo "Markdown report created."
-          echo "::set-output name=markdown_report::pylint_report.txt"
+
       - name: Upload Markdown Report
         uses: actions/upload-artifact@v2
         with:
           name: pylint-report
-          path: pylint_report.txt 
+          path: pylint_report.txt
