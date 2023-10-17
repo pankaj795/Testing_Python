@@ -74,7 +74,6 @@ jobs:
                  git push --force origin $branch_name 
                  echo "Committed and pushed to GitHub."
             fi 
-
           else
             echo "No Python files changed."
           fi  
