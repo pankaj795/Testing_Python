@@ -54,13 +54,8 @@ jobs:
             else
               echo "All files meet or exceed the threshold. Committing and pushing to GitHub."
               # Add and commit all changed Python files
-              token=${{ secrets.ATF }}
-              git config user.name "GitHub Actions"
-              git config user.email "actions@github.com"
-              branch_name="${{ github.ref }}"
-              branch_name="${branch_name#refs/heads/}"
               git add $changed_files
-  
+              git commit -m "Pylint check passed."
               git push origin ${{ github.ref }}
             fi
           else
@@ -76,7 +71,7 @@ jobs:
           echo "" >> "$report_file"
           echo "==========" >> "$report_file"
           echo "Files changed in the latest commit:" >> "$report_file"
-          cat "$changed_files" >> "$report_file"
+          echo "$changed_files" >> "$report_file"
           echo "==========" >> "$report_file"
           echo "Author: ${{ github.actor }}" >> "$report_file"
           echo "Reviewer: ${{ github.actor }}" >> "$report_file"
