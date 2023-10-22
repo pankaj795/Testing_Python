@@ -4,6 +4,4 @@ print("fsfsdffwfwrfwrwe")
 print("gffhghgfh")
 print("fdfssdfsaddwdddddddddddddddddddddddddsf")
 print("fffffff")
-print("Pankaj Agarwal")
-print("Pankajddfdfdfdssssssssssssssssssssssssss Agarwal")
-print("fdddddddddddggdg")
+
