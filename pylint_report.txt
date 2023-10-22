@@ -1,0 +1,13 @@
+## EDR Linter and Formatter
+==========
+Commit chain:
+- 2bf57f2 Update test.py
+- ee8e2f4 Update main.yml
+- 333585e pankaj.py
+==========
+Files changed in latest commit:
+
+==========
+Code Quality:
+    Benchmark: 8
+    Code_Score: 
