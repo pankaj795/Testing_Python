@@ -5,7 +5,7 @@ import numpy as np
 import time
 import torch
 from model import GPTConfig, GPT
-
+import pandas
 
 batch_size = 18
 block_size = 4096
