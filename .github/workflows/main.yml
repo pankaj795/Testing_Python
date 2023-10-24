@@ -29,17 +29,13 @@ jobs:
           python -m pip install --upgrade pip
           pip install pylint
 
-      - name: Get branch name
-        id: branch-name
-        run: echo "Branch name is ${GITHUB_REF#refs/heads/}"
-
-
       - name: List Changed Python Files
         id: list-changed-files
         run: |
-         branch_name="${{ steps.branch-name.outputs }}"
-         changed_files=$(git diff --name-only origin/$branch_name HEAD -- '**.py')
-         echo "::set-output name=changed_files::${changed_files}"
+           branch_name="${{ github.ref }}"
+           branch_name="${branch_name#refs/heads/}"
+           changed_files=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} -- '**.py')
+           echo "::set-output name=changed_files::${changed_files}"
 
 
       - name: Run Pylint and Store Score
