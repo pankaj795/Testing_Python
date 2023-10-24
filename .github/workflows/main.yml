@@ -27,8 +27,8 @@ jobs:
       - name: Find the files modified in the latest commit
         id: find_changed_files
         run: |
-          changed_files=$(git diff --name-only ${{ github.sha }}^ ${{ github.sha }} -- '**.py')
-          echo "::set-output name=changed_files::${changed_files}"
+            changed_files=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} -- '**.py')
+            echo "::set-output name=changed_files::${changed_files}"
 
       - name: Run Pylint and Store Score
         id: run_pylint
