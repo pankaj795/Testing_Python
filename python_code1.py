@@ -58,6 +58,9 @@ optimizer = model.configure_optimizers(weight_decay=1e-2, learning_rate=1e-4, be
 
 if compile:
     print("Compiling model...")
+    print("fmlfklemlfrfle....")
+    print("ffweffffffffff....")
+    print("Ffffffrfffffef....")
     model = torch.compile(model) # pytorch 2.0
 
 if profile:
@@ -85,6 +88,7 @@ if profile:
             optimizer.step()
             lossf = loss.item()
             print(f"{k}/{num_steps} loss: {lossf:.4f}")
+            print("dssdfsfffffffffffffffffffffffff")
 
             prof.step() 
 else:
