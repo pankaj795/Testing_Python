@@ -28,6 +28,7 @@ jobs:
         id: find_changed_files
         run: |
             changed_files= git diff --name-status [SHA1 [SHA2]]
+            echo "$changed_files"
             echo "::set-output name=changed_files::${changed_files}"
 
       - name: Run Pylint and Store Score
