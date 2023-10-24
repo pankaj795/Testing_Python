@@ -72,7 +72,8 @@ jobs:
                  
                  
                  
-                 
+              report_filename="pylint_report.txt"
+              echo "$file" >> "$report_filename"
               fi
             done
       
@@ -83,7 +84,7 @@ jobs:
           else
             echo "No Python files changed."
           fi
-          report_filename="pylint_report.txt"
+          
           echo "## EDR Linter and Formatter" >> "$report_filename"
           echo "Branch: ${{ github.ref }}" >> "$report_filename"
           echo "==========" >> "$report_filename"
