@@ -28,6 +28,12 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install pylint
+      
+      - name: Debug Info
+        run: |
+           echo "github.ref: ${{ github.ref }}"
+           echo "github.sha: ${{ github.sha }}"
+        shell: bash
 
       - name: List Changed Python Files
         id: list-changed-files
