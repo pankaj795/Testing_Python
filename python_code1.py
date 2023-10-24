@@ -5,12 +5,12 @@ import numpy as np
 import time
 import torch
 from model import GPTConfig, GPT
-import pandas
+
 
 batch_size = 18
 block_size = 4096
 real_data = True
-seed = 1337
+seed = 1556
 device = 'cuda' 
 dtype = 'bfloat16' if torch.cuda.is_available() and torch.cuda.is_bf16_supported() else 'float16'
 compile = True 
