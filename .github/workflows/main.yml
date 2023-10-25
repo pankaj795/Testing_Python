@@ -35,10 +35,9 @@ jobs:
       - name: List Changed Python Files
         id: list_changed_files
         run: |
-          changed_files=$(git diff --name-only v3.1.0.201310021548-r..HEAD)
-          echo $changed_files
+          changed_files=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} -- '**.py')
           echo "::set-output name=changed_files::${changed_files}"
-      - name: Run Pylint and Store Score
+      - name: Changed files    
         id: run_pylint
         run: |
           changed_files="${{ steps.list_changed_files.outputs.changed_files }}"
