@@ -9,4 +9,3 @@ print("ioiooi")
 print("uyyuuy")
 print("ioioio")
 print("AAAAAAAAAAAAAAA")
-
