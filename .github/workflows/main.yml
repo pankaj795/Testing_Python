@@ -42,8 +42,10 @@ jobs:
         run: |
           changed_files="${{ steps.list_changed_files.outputs.changed_files }}"
           threshold=0.8  # Set your desired threshold here
+          pylint_fail=false
+          report_filename="pylint_report.txt"
           if [ -n "$changed_files" ]; then
-            pylint_fail=false
+            echo "Files changed in this commit:"
             for file in $changed_files; do
               
               pylint_score=$(pylint "$file" | grep 'Your code has been rated at' | awk '{print $7}' || echo "0")
@@ -54,6 +56,8 @@ jobs:
                  report_file="${file}_pylint_report.txt"
                  
                  echo "Pylint Score: $pylint_score" > "$report_file"
+                 echo "Pylint score for $file: $pylint_score"
+                 echo "Pylint Score for $file: $pylint_score" >> "$report_filename"
                 # Perform the Git commit and push here
                  token=${{ secrets.ATF }}
                  git config user.name "GitHub Actions"
