@@ -40,13 +40,10 @@ jobs:
       - name: Commit and Push Changes
         run: |
                  
-                 git config user.name "GitHub Actions"
-                 git config user.email "actions@github.com"
-                 branch_name="${{ github.ref }}"
-                 branch_name="${branch_name#refs/heads/}"
-                 git add "$file"
-                 git push --force origin $branch_name 
-                 echo "Committed and pushed to GitHub.
+                  git config user.name "GitHub Actions"
+                  git config user.email "actions@github.com"
+          
+                  git push
         
          
         working-directory: ${{ github.workspace }}
