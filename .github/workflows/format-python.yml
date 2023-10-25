@@ -7,11 +7,10 @@ on:
   pull_request:
     branches:
       - '*'
-  # You can customize this further, e.g., on: [push, pull_request] for both pushes and pull requests.
 
 jobs:
   format:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout Code
@@ -20,30 +19,21 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
-          python-version: 3.10.4  # Replace with your desired Python version.
+          python-version: 3.10  # Replace with your desired Python version.
 
       - name: Install Black
         run: pip install black
 
-      - name: Find Python Files
+      - name: Find and Format Python Files
         run: |
-          find . -name "*.py" > py_files.txt
-        shell: bash
-
-      - name: Format with Black
-        run: |
-          while read -r file; do
-            black "$file"
-          done < py_files.txt
+          find . -name "*.py" -exec black {} \;
         shell: bash
 
       - name: Commit and Push Changes
         run: |
-                 
-                  git config user.name "GitHub Actions"
-                  git config user.email "actions@github.com"
-          
-                  git push
-        
-         
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git add .
+          git commit -m "Format Python code with Black"
+          git push
         working-directory: ${{ github.workspace }}
