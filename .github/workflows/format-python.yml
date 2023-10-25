@@ -1,1 +1,52 @@
+name: Format Python Code with Black
 
+on:
+  push:
+    branches:
+      - '*'
+  pull_request:
+    branches:
+      - '*'
+  # You can customize this further, e.g., on: [push, pull_request] for both pushes and pull requests.
+
+jobs:
+  format:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.10.4  # Replace with your desired Python version.
+
+      - name: Install Black
+        run: pip install black
+
+      - name: Find Python Files
+        run: |
+          find . -name "*.py" > py_files.txt
+        shell: bash
+
+      - name: Format with Black
+        run: |
+          while read -r file; do
+            black "$file"
+          done < py_files.txt
+        shell: bash
+
+      - name: Commit and Push Changes
+        run: |
+                 token=${{ secrets.ATF }}
+                 git config user.name "GitHub Actions"
+                 git config user.email "actions@github.com"
+                 branch_name="${{ github.ref }}"
+                 branch_name="${branch_name#refs/heads/}"
+                 git add "$file"
+                 git push --force origin $branch_name 
+                 echo "Committed and pushed to GitHub.
+        
+         
+        working-directory: ${{ github.workspace }}
