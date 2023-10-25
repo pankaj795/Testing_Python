@@ -1,14 +1,8 @@
 print("Pankaj")
 print("Attackfence")
-print("vmkfvmdlfmlddl")
-print("Fsfddfffsdf")
-print("ytyytytytyt")
-print("fdsfsfdsfd")
-print("Pankaj")
-print("AGARWALPANKAJ")`
-print("jdaksakaaskjkjsda")
-print("sddsdsdsadsa")
-print("dasadsdsdsdsa")
-print("ddsasdadsadsa")
-print("Bye")
+print("Hiii")
+print("Hello")
+print("opopop")
+print("ererer")
+
 
