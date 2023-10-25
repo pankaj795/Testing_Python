@@ -39,7 +39,7 @@ jobs:
 
       - name: Commit and Push Changes
         run: |
-                 token=${{ secrets.ATF }}
+                 
                  git config user.name "GitHub Actions"
                  git config user.email "actions@github.com"
                  branch_name="${{ github.ref }}"
