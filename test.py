@@ -1,12 +1,4 @@
-#PANKAJ AGARWALshdbhdbjhbdjas
-
-
-
-
-
-
-
-
+# AEWQWElkewefelkfmsldfmlsdkmflskdmfdslfmlsdmflskmf
 
 
 print("Pankaj Agarwal")
