@@ -45,7 +45,7 @@ jobs:
         run: |
           changed_files="${{ steps.list_changed_files.outputs.changed_files }}"
           threshold=0.8  # Set your desired threshold here
-          lowest_score=1000  # Initialize to a high value
+          lowest_score=1  # Initialize to a high value
           pylint_fail=false
           for file in $changed_files; do
             pylint_score=$(pylint "$file" | grep 'Your code has been rated at' | awk '{print $7}' || echo "0")
