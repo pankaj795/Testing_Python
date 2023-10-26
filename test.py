@@ -5,10 +5,7 @@ print("Pankaj Agarwal")
 print("rewwwrw")
 print("rereerr")
 print("dsfsdfsfsdf")
-print("fsfsdffwfwrfwrwe")
-print("gffhghgfh")
-print("Dsdaadad"
-print("sadadasd")
+
 print("fdfssdfsaddwdddddddddddddddddddddddddsf")
 print("fffffff")
 
