@@ -81,15 +81,14 @@ jobs:
           echo "Author: ${{ github.actor }}" >> "$overall_report_filename"
           echo "Reviewer: ${{ github.actor }}" >> "$overall_report_filename"
           echo "Code Quality:" >> "$overall_report_filename"
-          {
-            echo "    Benchmark: 8"
-            echo "    Lowest_Score: $lowest_score"
-            if [ "$pylint_fail" = true ]; then
-              echo "    Check Status: Fail"
-            else
-              echo "    Check Status: Pass"
-            }
-          } >> "$overall_report_filename"
+          echo "    Benchmark: 8" >> "$overall_report_filename"
+          echo "    Lowest_Score: $lowest_score" >> "$overall_report_filename"
+          if [ "$pylint_fail" = true ]; then
+              echo "    Check Status: Fail" >> "$overall_report_filename"
+          else
+              echo "    Check Status: Pass" >> "$overall_report_filename"
+          fi  
+           
 
           echo "Markdown report created."
           echo "::set-output name=markdown_report::pylint_report.txt"
