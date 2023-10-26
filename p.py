@@ -2,7 +2,7 @@
 
 
 def w(b):  # Invalid function and argument name
-    x = 5
+    x = 78
     y = 3
     return x + y
 
