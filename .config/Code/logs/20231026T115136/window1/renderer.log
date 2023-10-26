@@ -1,0 +1,107 @@
+2023-10-26 11:51:37.641 [warning] Via 'product.json#extensionEnabledApiProposals' extension 'ms-dotnettools.dotnet-interactive-vscode' wants API proposal 'languageConfigurationAutoClosingPairs' but that proposal DOES NOT EXIST. Likely, the proposal has been finalized (check 'vscode.d.ts') or was abandoned.
+2023-10-26 11:51:37.654 [warning] Via 'product.json#extensionEnabledApiProposals' extension 'github.copilot-chat' wants API proposal 'terminalContextMenu' but that proposal DOES NOT EXIST. Likely, the proposal has been finalized (check 'vscode.d.ts') or was abandoned.
+2023-10-26 11:51:38.075 [info] Started initializing default profile extensions in extensions installation folder. file:///home/attackfence/.vscode/extensions
+2023-10-26 11:51:38.479 [info] Completed initializing default profile extensions in extensions installation folder. file:///home/attackfence/.vscode/extensions
+2023-10-26 11:51:41.071 [info] [perf] Render performance baseline is 31ms
+2023-10-26 12:06:12.179 [warning] Via 'product.json#extensionEnabledApiProposals' extension 'ms-dotnettools.dotnet-interactive-vscode' wants API proposal 'languageConfigurationAutoClosingPairs' but that proposal DOES NOT EXIST. Likely, the proposal has been finalized (check 'vscode.d.ts') or was abandoned.
+2023-10-26 12:06:12.179 [warning] Via 'product.json#extensionEnabledApiProposals' extension 'github.copilot-chat' wants API proposal 'terminalContextMenu' but that proposal DOES NOT EXIST. Likely, the proposal has been finalized (check 'vscode.d.ts') or was abandoned.
+2023-10-26 12:06:15.091 [info] [perf] Render performance baseline is 29ms
+2023-10-26 12:07:26.307 [error] Error: The file is not displayed in the text editor because it is very large (2.15GB).
+    at y (vscode-file://vscode-app/snap/code/143/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:148:781)
+    at Y (vscode-file://vscode-app/snap/code/143/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:769:55521)
+    at M (vscode-file://vscode-app/snap/code/143/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:769:50193)
+    at M.fc (vscode-file://vscode-app/snap/code/143/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:2327:22236)
+    at M.setInput (vscode-file://vscode-app/snap/code/143/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:2327:21455)
+    at async n.R (vscode-file://vscode-app/snap/code/143/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:2325:22000)
+    at async n.J (vscode-file://vscode-app/snap/code/143/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:2325:20668)
+    at async n.openEditor (vscode-file://vscode-app/snap/code/143/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:2325:19656)
+    at async vscode-file://vscode-app/snap/code/143/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:2514:21238
+    at async u.value (vscode-file://vscode-app/snap/code/143/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:2547:45561)
+2023-10-26 12:07:31.825 [error] Error: The file is not displayed in the text editor because it is very large (1.61GB).
+    at y (vscode-file://vscode-app/snap/code/143/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:148:781)
+    at Y (vscode-file://vscode-app/snap/code/143/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:769:55521)
+    at M (vscode-file://vscode-app/snap/code/143/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:769:50193)
+    at M.fc (vscode-file://vscode-app/snap/code/143/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:2327:22236)
+    at M.setInput (vscode-file://vscode-app/snap/code/143/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:2327:21455)
+    at async n.R (vscode-file://vscode-app/snap/code/143/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:2325:22000)
+    at async n.J (vscode-file://vscode-app/snap/code/143/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:2325:20668)
+    at async n.openEditor (vscode-file://vscode-app/snap/code/143/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:2325:19656)
+    at async vscode-file://vscode-app/snap/code/143/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:2514:21238
+    at async u.value (vscode-file://vscode-app/snap/code/143/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:2547:45561)
+2023-10-26 12:08:25.523 [error] Error: The file is not displayed in the text editor because it is very large (2.15GB).
+    at y (vscode-file://vscode-app/snap/code/143/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:148:781)
+    at Y (vscode-file://vscode-app/snap/code/143/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:769:55521)
+    at M (vscode-file://vscode-app/snap/code/143/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:769:50193)
+    at M.fc (vscode-file://vscode-app/snap/code/143/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:2327:22236)
+    at M.setInput (vscode-file://vscode-app/snap/code/143/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:2327:21455)
+    at async n.R (vscode-file://vscode-app/snap/code/143/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:2325:22000)
+    at async n.J (vscode-file://vscode-app/snap/code/143/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:2325:20668)
+    at async n.openEditor (vscode-file://vscode-app/snap/code/143/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:2325:19656)
+    at async vscode-file://vscode-app/snap/code/143/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:2514:21238
+    at async u.value (vscode-file://vscode-app/snap/code/143/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:2547:45561)
+2023-10-26 12:08:39.664 [error] Error: The file is not displayed in the text editor because it is very large (1.61GB).
+    at y (vscode-file://vscode-app/snap/code/143/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:148:781)
+    at Y (vscode-file://vscode-app/snap/code/143/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:769:55521)
+    at M (vscode-file://vscode-app/snap/code/143/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:769:50193)
+    at M.fc (vscode-file://vscode-app/snap/code/143/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:2327:22236)
+    at M.setInput (vscode-file://vscode-app/snap/code/143/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:2327:21455)
+    at async n.R (vscode-file://vscode-app/snap/code/143/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:2325:22000)
+    at async n.J (vscode-file://vscode-app/snap/code/143/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:2325:20668)
+    at async n.openEditor (vscode-file://vscode-app/snap/code/143/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:2325:19656)
+    at async vscode-file://vscode-app/snap/code/143/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:2514:21238
+    at async u.value (vscode-file://vscode-app/snap/code/143/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:2547:45561)
+2023-10-26 12:08:41.553 [error] Error: The file is not displayed in the text editor because it is very large (2.15GB).
+    at y (vscode-file://vscode-app/snap/code/143/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:148:781)
+    at Y (vscode-file://vscode-app/snap/code/143/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:769:55521)
+    at M (vscode-file://vscode-app/snap/code/143/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:769:50193)
+    at M.fc (vscode-file://vscode-app/snap/code/143/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:2327:22236)
+    at M.setInput (vscode-file://vscode-app/snap/code/143/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:2327:21455)
+    at async n.R (vscode-file://vscode-app/snap/code/143/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:2325:22000)
+    at async n.J (vscode-file://vscode-app/snap/code/143/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:2325:20668)
+    at async n.openEditor (vscode-file://vscode-app/snap/code/143/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:2325:19656)
+    at async vscode-file://vscode-app/snap/code/143/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:2514:21238
+    at async u.value (vscode-file://vscode-app/snap/code/143/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:2547:45561)
+2023-10-26 12:09:00.226 [error] Error: The file is not displayed in the text editor because it is very large (1.61GB).
+    at y (vscode-file://vscode-app/snap/code/143/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:148:781)
+    at Y (vscode-file://vscode-app/snap/code/143/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:769:55521)
+    at M (vscode-file://vscode-app/snap/code/143/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:769:50193)
+    at M.fc (vscode-file://vscode-app/snap/code/143/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:2327:22236)
+    at M.setInput (vscode-file://vscode-app/snap/code/143/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:2327:21455)
+    at async n.R (vscode-file://vscode-app/snap/code/143/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:2325:22000)
+    at async n.J (vscode-file://vscode-app/snap/code/143/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:2325:20668)
+    at async n.openEditor (vscode-file://vscode-app/snap/code/143/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:2325:19656)
+    at async vscode-file://vscode-app/snap/code/143/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:2514:21238
+    at async u.value (vscode-file://vscode-app/snap/code/143/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:2547:45561)
+2023-10-26 12:09:01.440 [error] Error: The file is not displayed in the text editor because it is very large (2.15GB).
+    at y (vscode-file://vscode-app/snap/code/143/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:148:781)
+    at Y (vscode-file://vscode-app/snap/code/143/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:769:55521)
+    at M (vscode-file://vscode-app/snap/code/143/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:769:50193)
+    at M.fc (vscode-file://vscode-app/snap/code/143/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:2327:22236)
+    at M.setInput (vscode-file://vscode-app/snap/code/143/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:2327:21455)
+    at async n.R (vscode-file://vscode-app/snap/code/143/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:2325:22000)
+    at async n.J (vscode-file://vscode-app/snap/code/143/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:2325:20668)
+    at async n.openEditor (vscode-file://vscode-app/snap/code/143/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:2325:19656)
+    at async vscode-file://vscode-app/snap/code/143/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:2514:21238
+    at async u.value (vscode-file://vscode-app/snap/code/143/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:2547:45561)
+2023-10-26 12:16:03.401 [error] Error: The file is not displayed in the text editor because it is very large (1.61GB).
+    at y (vscode-file://vscode-app/snap/code/143/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:148:781)
+    at Y (vscode-file://vscode-app/snap/code/143/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:769:55521)
+    at M (vscode-file://vscode-app/snap/code/143/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:769:50193)
+    at M.fc (vscode-file://vscode-app/snap/code/143/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:2327:22236)
+    at M.setInput (vscode-file://vscode-app/snap/code/143/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:2327:21455)
+    at async n.R (vscode-file://vscode-app/snap/code/143/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:2325:22000)
+    at async n.J (vscode-file://vscode-app/snap/code/143/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:2325:20668)
+    at async n.openEditor (vscode-file://vscode-app/snap/code/143/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:2325:19656)
+    at async vscode-file://vscode-app/snap/code/143/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:2514:21238
+    at async u.value (vscode-file://vscode-app/snap/code/143/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:2547:45561)
+2023-10-26 12:16:12.652 [error] Error: The file is not displayed in the text editor because it is very large (2.15GB).
+    at y (vscode-file://vscode-app/snap/code/143/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:148:781)
+    at Y (vscode-file://vscode-app/snap/code/143/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:769:55521)
+    at M (vscode-file://vscode-app/snap/code/143/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:769:50193)
+    at M.fc (vscode-file://vscode-app/snap/code/143/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:2327:22236)
+    at M.setInput (vscode-file://vscode-app/snap/code/143/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:2327:21455)
+    at async n.R (vscode-file://vscode-app/snap/code/143/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:2325:22000)
+    at async n.J (vscode-file://vscode-app/snap/code/143/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:2325:20668)
+    at async n.openEditor (vscode-file://vscode-app/snap/code/143/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:2325:19656)
+    at async vscode-file://vscode-app/snap/code/143/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:2514:21238
+    at async u.value (vscode-file://vscode-app/snap/code/143/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:2547:45561)

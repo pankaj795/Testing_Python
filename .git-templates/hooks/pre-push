@@ -1,0 +1,37 @@
+#!/bin/bash
+
+threshold=0.8  # Set your desired threshold here
+
+# Location of your Pylint configuration file
+PYLINTRC=".pylintrc"
+
+remote="$1"
+url="$2"
+
+while read local_ref local_sha1 remote_ref remote_sha1; do
+  if [[ $local_ref == "refs/heads/"* ]]; then
+    branch_name=${local_ref#refs/heads/}
+
+    # Check for Python files
+    changed_python_files=$(git diff --name-only "$remote_sha1" "$local_sha1" | grep '\.py$')
+
+    if [ -n "$changed_python_files" ]; then
+      pylint_fail=false
+      for file in $changed_python_files; do
+        pylint_score=$(pylint --rcfile "$PYLINTRC"  "$file" | grep 'Your code has been rated at' | awk '{print $7}' || echo "0")
+        echo "Pylint score for $file: $pylint_score"
+        if (( $(echo "$pylint_score <= $threshold" | bc -l) )); then
+          echo "Pylint score for $file is below the threshold. Push blocked."
+          pylint_fail=true
+        fi
+      done
+
+      if [ "$pylint_fail" = true ]; then
+        exit 1
+      fi
+    fi
+  fi
+done
+
+exit 0
+
