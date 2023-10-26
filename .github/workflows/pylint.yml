@@ -69,6 +69,7 @@ jobs:
           echo "Branch: ${{ github.ref }}" >> "$overall_report_filename"
           echo "==========" >> "$overall_report_filename"
           echo "Commit chain:" >> "$overall_report_filename"
+          token=${{ secrets.ATF }}
           git log -n 3 --pretty=format:"- %h %s" >> "$overall_report_filename"
           echo "" >> "$overall_report_filename"
           echo "==========" >> "$overall_report_filename"
