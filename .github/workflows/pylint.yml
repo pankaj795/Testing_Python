@@ -44,7 +44,7 @@ jobs:
           threshold=0.8  # Set your desired threshold here
           if [ -n "$changed_files" ]; then
             pylint_fail=false
-            for file in $changed_files; do
+          for file in $changed_files; do
               
               pylint_score=$(pylint "$file" | grep 'Your code has been rated at' | awk '{print $7}' || echo "0")
               echo "Pylint score for $file: $pylint_score"
