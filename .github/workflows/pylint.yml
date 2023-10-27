@@ -33,40 +33,46 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install pylint
+
       - name: List Changed Python Files
         id: list_changed_files
         run: |
           changed_files=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} -- '**.py')
           echo "::set-output name=changed_files::${changed_files}"
+
       - name: Run Pylint and Store Scores
         id: run_pylint
         run: |
           changed_files="${{ steps.list_changed_files.outputs.changed_files }}"
           threshold=0.8  # Set your desired threshold here
-          lowest_score=1  # Initialize to a high value
+          lowest_score=10  # Initialize to a high value
           pylint_fail=false
+
           for file in $changed_files; do
             pylint_score=$(pylint "$file" | grep 'Your code has been rated at' | awk '{print $7}' || echo "0")
             echo "Pylint score for $file: $pylint_score"
+
             # Create a report file with the Pylint score for each file
             report_file="${file}_pylint_report.txt"
             echo "Pylint Score: $pylint_score" > "$report_file"
+
             # Determine if this file failed
             if (( $(echo "$pylint_score < $threshold" | bc -l) )); then
               pylint_fail=true
             fi
+
             # Check if this file has the lowest score
             if (( $(echo "$pylint_score < $lowest_score" | bc -l) )); then
               lowest_score=$pylint_score
             fi
           done
+
           # Construct an overall report
           overall_report_filename="pylint_overall_report.txt"
           echo "## EDR Linter and Formatter (Overall Report)" > "$overall_report_filename"
           echo "Branch: ${{ github.ref }}" >> "$overall_report_filename"
           echo "==========" >> "$overall_report_filename"
           echo "Commit chain:" >> "$overall_report_filename"
-          token=${{ secrets.ATF }}
           git log -n 3 --pretty=format:"- %h %s" >> "$overall_report_filename"
           echo "" >> "$overall_report_filename"
           echo "==========" >> "$overall_report_filename"
@@ -79,15 +85,17 @@ jobs:
           echo "Reviewer: ${{ github.actor }}" >> "$overall_report_filename"
           echo "Code Quality:" >> "$overall_report_filename"
           echo "    Benchmark: 8" >> "$overall_report_filename"
-          echo "    Lowest_Score: $lowest_score" >> "$overall_report_filename"
+          echo "    Lowest_Score: $lowest_score/10" >> "$overall_report_filename"
+
           if [ "$pylint_fail" = true ]; then
-              echo "    Check Status: Fail" >> "$overall_report_filename"
+            echo "    Check Status: Fail" >> "$overall_report_filename"
           else
-              echo "    Check Status: Pass" >> "$overall_report_filename"
-          fi  
-           
+            echo "    Check Status: Pass" >> "$overall_report_filename"
+          fi
+
           echo "Markdown report created."
-          echo "::set-output name=markdown_report::pylint_report.txt"
+          echo "::set-output name=markdown_report::pylint_overall_report.txt"
+
       - name: Upload Markdown Report
         uses: actions/upload-artifact@v2
         with:
