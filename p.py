@@ -2,9 +2,9 @@
 
 
 def w(b):  # Invalid function and argument name
-    x = 5032
-    y = 3
-    return x + y
+    a = 123
+    b = 3
+    return a + b
 
 
 # Missing docstring for function
