@@ -2,7 +2,7 @@
 
 
 def w(b):  # Invalid function and argument name
-    a = 123
+    a = 12345
     b = 3
     return a + b
 
