@@ -84,7 +84,7 @@ jobs:
                if (( $(echo "$score < $lowest_score" | bc -l) )); then
                       lowest_score=$score
                fi
-               }
+               
                if (( $(echo "$lowest_score < $threshold" | bc -l) )); then
                pylint_fail=true
                fi
