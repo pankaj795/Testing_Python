@@ -35,6 +35,12 @@ jobs:
           python -m pip install --upgrade pip
           pip install pylint
 
+      - name: Debug Changed Files
+        run: |
+             git status
+             git log -n 5 --oneline
+
+
       - name: List Changed Python Files
         id: list_changed_files
         run: |
