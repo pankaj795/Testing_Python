@@ -2,7 +2,7 @@
 
 
 def w(m):  # Invalid function and argument name
-    a = 12
+    a = 123
     b = 12
     return a + b
 
