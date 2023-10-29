@@ -81,12 +81,12 @@ jobs:
     
                lowest_score=1.0  # Initialize to a high value
                for score in "${scores[@]}"; do
-               if (( $(echo "$score < $lowest_score" | bc -l) )); then
+                  if (( $(echo "$score < $lowest_score" | bc -l) )); then
                       lowest_score=$score
-               fi
+                  fi
                
                if (( $(echo "$lowest_score < $threshold" | bc -l) )); then
-               pylint_fail=true
+                    pylint_fail=true
                fi
 
                if [ "$pylint_fail" = true ]; then
