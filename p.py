@@ -1,8 +1,8 @@
 # pylint: disable=invalid-name, missing-docstring, unused-argument
 
 
-def w(b):  # Invalid function and argument name
-    a = 12345
+def w(m):  # Invalid function and argument name
+    a = 1
     b = 3
     return a + b
 
