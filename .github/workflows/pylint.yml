@@ -94,6 +94,7 @@ jobs:
           echo "Code Quality:" >> "$overall_report_filename"
           echo "    Benchmark: $threshold" >> "$overall_report_filename"
           echo "    Lowest_Score: $lowest_score" >> "$overall_report_filename"
+          echo "    Pylint Score of $file : $pylint_score" >> "$overall_report_filename"
           
           if [ "$pylint_fail" = true ]; then
             echo "    Check Status: Fail" >> "$overall_report_filename"
