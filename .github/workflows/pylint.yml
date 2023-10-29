@@ -48,63 +48,64 @@ jobs:
           echo "::set-output name=changed_files::${changed_files}"
 
       - name: Run Pylint and Store Scores
-        id: run_pylint
-        run: |
-          changed_files="${{ steps.list_changed_files.outputs.changed_files }}"
-          threshold=0.8  # Set your desired threshold here
-          lowest_score=1.0  # Initialize to 1.0 (highest possible score)
-          pylint_fail=false
+  id: run_pylint
+  run: |
+    changed_files="${{ steps.list_changed_files.outputs.changed_files }}"
+    threshold=0.8  # Set your desired threshold here
+    pylint_fail=false
 
-          for file in $changed_files; do
-            pylint_score=$(pylint "$file" | grep 'Your code has been rated at' | awk '{print $7}' || echo "0.0")
-            echo "Pylint score for $file: $pylint_score"
+    # Initialize an empty array to store scores and file names
+    declare -A scores
 
-            # Create a report file with the Pylint score for each file
-            report_file="${file}_pylint_report.txt"
-            echo "Pylint Score: $pylint_score" > "$report_file"
+    for file in $changed_files; do
+      pylint_score=$(pylint "$file" | grep 'Your code has been rated at' | awk '{print $7}' || echo "0")
+      echo "Pylint score for $file: $pylint_score"
 
-            # Determine if this file failed
-            if (( $(echo "$pylint_score < $threshold" | bc -l) )); then
-              pylint_fail=true
-            fi
+      # Store the score in the scores array using the file name as the key
+      scores["$file"]=$pylint_score
+    done
 
-            # Check if this file has the lowest score
-            if (( $(echo "$pylint_score < $lowest_score" | bc -l) )); then
-              lowest_score=$pylint_score
-              lowest_score_file=$file  # Store the file with the lowest score
-            fi
-          done
+    # Create the report file and write the scores for all changed files
+    report_file="pylint_overall_report.txt"
+    echo "## EDR Linter and Formatter (Overall Report)" > "$report_file"
+    echo "Branch: ${{ github.ref }}" >> "$report_file"
+    echo "==========" >> "$report_file"
+    echo "Commit chain:" >> "$report_file"
+    git log -n 3 --pretty=format:"- %h %s" >> "$report_file"
+    echo "" >> "$report_file"
+    echo "==========" >> "$report_file"
+    echo "Files changed in the latest commit:" >> "$report_file"
+    for file in $changed_files; do
+      echo "$file" >> "$report_file"
+      # Include the Pylint score in the report
+      echo "Pylint Score for $file: ${scores[$file]}" >> "$report_file"
+    done
+    echo "==========" >> "$report_file"
+    echo "Author: ${{ github.actor }}" >> "$report_file"
+    echo "Reviewer: ${{ github.actor }}" >> "$report_file"
+    echo "Code Quality:" >> "$report_file"
+    echo "    Benchmark: $threshold" >> "$report_file"
 
-          # Construct an overall report
-          overall_report_filename="pylint_overall_report.txt"
-          echo "## EDR Linter and Formatter (Overall Report)" > "$overall_report_filename"
-          echo "Branch: ${{ github.ref }}" >> "$overall_report_filename"
-          echo "==========" >> "$overall_report_filename"
-          echo "Commit chain:" >> "$overall_report_filename"
-          git log -n 3 --pretty=format:"- %h %s" >> "$overall_report_filename"
-          echo "" >> "$overall_report_filename"
-          echo "==========" >> "$overall_report_filename"
-          echo "Files changed in the latest commit:" >> "$overall_report_filename"
-          for file in $changed_files; do
-            echo "$file" >> "$overall_report_filename"
-          done
-          echo "==========" >> "$overall_report_filename"
-          echo "Author: ${{ github.actor }}" >> "$overall_report_filename"
-          echo "Reviewer: ${{ github.actor }}" >> "$overall_report_filename"
-          echo "Code Quality:" >> "$overall_report_filename"
-          echo "    Benchmark: $threshold" >> "$overall_report_filename"
-          echo "    Lowest_Score: $lowest_score" >> "$overall_report_filename"
-          echo "    Pylint Score of $file : $pylint_score" >> "$overall_report_filename"
-          
-          if [ "$pylint_fail" = true ]; then
-            echo "    Check Status: Fail" >> "$overall_report_filename"
-          else
-            echo "    Check Status: Pass" >> "$overall_report_filename"
-          fi
+    # Determine overall check status based on the lowest score
+    lowest_score=10  # Initialize to a high value
+    for score in "${scores[@]}"; do
+      if (( $(echo "$score < $lowest_score" | bc -l) )); then
+        lowest_score=$score
+      fi
+    }
+    if (( $(echo "$lowest_score < $threshold" | bc -l) )); then
+      pylint_fail=true
+    fi
 
-          echo "Markdown report created."
-          echo "::set-output name=markdown_report::pylint_overall_report.txt"
-          echo "Lowest Score File: $lowest_score_file"  # Print the file with the lowest score
+    if [ "$pylint_fail" = true ]; then
+      echo "    Check Status: Fail" >> "$report_file"
+    else
+      echo "    Check Status: Pass" >> "$report_file"
+    fi
+
+    echo "Markdown report created."
+    echo "::set-output name=markdown_report::$report_file"
+
 
       - name: Upload Markdown Report
         uses: actions/upload-artifact@v2
