@@ -2,8 +2,8 @@
 
 
 def w(m):  # Invalid function and argument name
-    a = 104
-    b = 1236
+    a = 134
+    b = 1455
     return a + b
 
 
