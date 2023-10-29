@@ -60,24 +60,12 @@ jobs:
            #changed_files=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} -- '**.py')
            # echo "::set-output name=changed_files::${changed_files}"
 
-      - name: Run Pylint and Store Scores
-        id: run-pylint
-        run: |
-                changed_files="${{ steps.changed-files.outputs.all_modified_files }}"  # Use the list of changed files from the 
-                threshold=0.8
-                pylint_fail=false
-                declare -A scores
-
-                for file in $changed_files; do
-                      pylint_score=$(pylint "$file" | grep 'Your code has been rated at' | awk '{print $7}' || echo "0")
-                      echo "Pylint score for $file: $pylint_score"
-                      scores["$file"]=$pylint_score
-                done
+      
 
       - name: Run Pylint and Store Scores backup
         id: run_pylint
         run: |
-             changed_files="${{ steps.list_changed_files.outputs.changed_files }}"
+             changed_files="${{ steps.changed-files.outputs.all_modified_files }}"
              threshold=0.8  
              pylint_fail=false
              declare -A scores
