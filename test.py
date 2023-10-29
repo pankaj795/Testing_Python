@@ -6,7 +6,8 @@ print("rewwwrw")
 print("rereerr")
 print("dsfsdfsfsdf")
 print("dddsdddsdd")
-
+print("xffggffffg")
+print("xcfgbgtttt")
 
 print("dfefww")
 print("fwefwfw")
