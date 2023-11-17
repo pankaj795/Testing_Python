@@ -18,6 +18,9 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v2
+        with:
+          # Additional annotations to display progress
+          annotation: "Checking out code"
 
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v2
