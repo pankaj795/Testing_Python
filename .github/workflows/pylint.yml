@@ -16,6 +16,10 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v2
+  
+  pylint1:
+    runs-on: ubuntu-22.04
+    steps:    
         
       - name: Set up Python 3.10.4
         uses: actions/setup-python@v2
@@ -23,100 +27,4 @@ jobs:
           python-version: "3.10.4"
        
 
-     
-      - name: Checkout Code
-        uses: actions/checkout@v2
-        with:
-         fetch-depth: 0
-         annotation: "Checking out code"
-
-          
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install pylint
-          echo "Checking out code again..."
-
-      - name: Debug Changed Files
-        run: |
-             git status
-             git log -n 5 --oneline
-
-      - name: Get changed files
-        id: changed-files
-        uses: tj-actions/changed-files@v9.2
-      
-      - name: List all modified files
-        run: |
-
-           changed_files="${{ steps.changed-files.outputs.all_modified_files }}"
-           echo "::set-output name=changed_files::${changed_files}"
-           for file in "${{ steps.changed-files.outputs.all_modified_files }}"; do
-               echo "$file was modified"
-           done       
-
-
-           #   - name: List Changed Python Files1
-           #  id: list_changed_files
-           # run: |
-           #changed_files=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} -- '**.py')
-           # echo "::set-output name=changed_files::${changed_files}"
-
-      
-
-      - name: Run Pylint and Store Scores backup
-        id: run_pylint
-        run: |
-             changed_files="${{ steps.changed-files.outputs.all_modified_files }}"
-             threshold=0.8  
-             pylint_fail=false
-             declare -A scores
-             for file in $changed_files; do
-                pylint_score=$(pylint "$file" | grep 'Your code has been rated at' | awk '{print $7}' || echo "0")
-                echo "Pylint score for $file: $pylint_score"
-                scores["$file"]=$pylint_score
-             done
-             report_file="pylint_overall_report.txt"
-             echo "## EDR Linter and Formatter (Overall Report)" > "$report_file"
-             echo "Branch: ${{ github.ref }}" >> "$report_file"
-             echo "==========" >> "$report_file"
-             echo "Commit chain:" >> "$report_file"
-             git log -n 3 --pretty=format:"- %h %s" >> "$report_file"
-             echo "" >> "$report_file"
-             echo "==========" >> "$report_file"
-             echo "Files changed in the latest commit:" >> "$report_file"
-             for file in $changed_files; do
-                  echo "$file" >> "$report_file"
-                  echo "Pylint Score for $file: ${scores[$file]}" >> "$report_file"
-             done
-             echo "==========" >> "$report_file"
-             echo "Author: ${{ github.actor }}" >> "$report_file"
-             echo "Reviewer: ${{ github.actor }}" >> "$report_file"
-             echo "Code Quality:" >> "$report_file"
-
-             lowest_score=1.0  # Initialize to a high value
-             for score in "${scores[@]}"; do
-                if (( $(echo "$score < $lowest_score" | bc -l) )); then
-                   lowest_score=$score
-                fi
-             done
     
-             if (( $(echo "$lowest_score < $threshold" | bc -l) )); then
-                   pylint_fail=true
-             fi
-
-             if [ "$pylint_fail" = true ]; then
-                      echo "    Check Status: Fail" >> "$report_file"
-             else
-                    echo "    Check Status: Pass" >> "$report_file"
-             fi
-
-             echo "Markdown report created."
-             echo "::set-output name=markdown_report::$report_file"
-
-       
-      - name: Upload Markdown Report
-        uses: actions/upload-artifact@v3
-        with:
-          name: pylint-report
-          path: pylint_overall_report.txt
