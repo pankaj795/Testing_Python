@@ -5,6 +5,6 @@
 a = 146
 b = 12
 
-print("Pankddcdf")
-print("fdfdcdsdsdcszZZZZZZZZZZZZds")
+print("Pakkkkkkk;;;;;;;;;;;;;;;;;;;;;nkddcdf")
+
 print("Atsddcdsdxaaaaaaactackfence")
