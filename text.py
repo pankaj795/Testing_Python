@@ -6,3 +6,5 @@ print("fkjnknfkevnfdv")
 print("fnjkvkvkfdvnkf")
 print("xcdcdcdcdsds")
 # pqpxlpwxkpxkpxkpodckpodwckpdc
+print("chjsjhhsjhshjs")
+print("pipoppipi")
