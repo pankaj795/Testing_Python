@@ -45,7 +45,7 @@ jobs:
       - name: List all modified files
         run: |
            changed_files="${{ steps.changed-files.outputs.all_modified_files }}"
-           echo "::set-output name=changed_files::${changed_files}"
+           echo "{changed_files}=${changed_files}" >> $GITHUB_OUTPUT
            for file in "${{ steps.changed-files.outputs.all_modified_files }}"; do
                echo "$file was modified"
            done       
@@ -53,7 +53,7 @@ jobs:
            #  id: list_changed_files
            # run: |
            #changed_files=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} -- '**.py')
-           # echo "::set-output name=changed_files::${changed_files}"
+           # echo "{changed_files}=${changed_files}" >> $GITHUB_OUTPUT
       
 
       - name: 🚀Run Pylint and Store Scores backup
@@ -103,7 +103,7 @@ jobs:
              fi
 
              echo "📝Markdown report created."
-             echo "::set-output name=markdown_report::$report_file"
+             echo "{markdown_report}=${report_file}" >> $GITHUB_OUTPUT
 
        
       - name: 📤 Display Markdown Report
