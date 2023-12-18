@@ -7,7 +7,3 @@ b = 12
 
 print("Pnkddcdf")
 print("sadsdsdasa")
-print("PANKAJ AGARWAL")
-print("AMITY UNIVERSITY")
-
-print("Atsddcdsdxaaaaaaactackfence")
