@@ -12,4 +12,6 @@ print("fvdmdflkndflbdv")
 print("Ffsdsfsfsfsf")
 print("fvfvvfdvdv")
 print("ghdfgdhfdgh")
+print("AMITY UNIVERSITY")
+print("fferferferf")
 
