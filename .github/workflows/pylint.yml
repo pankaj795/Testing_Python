@@ -106,8 +106,5 @@ jobs:
              echo "::set-output name=markdown_report::$report_file"
 
        
-      - name: 📤Upload Markdown Report
-        uses: actions/upload-artifact@v3
-        with:
-          name: pylint-report
-          path: pylint_overall_report.txt
+      - name: 📤 Display Markdown Report
+        run: cat pylint_overall_report.txt
