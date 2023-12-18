@@ -106,13 +106,5 @@ jobs:
              echo "::set-output name=markdown_report::$report_file"
 
        
-      - name: Display Pylint Report
-        run: |
-         report_content=$(cat pylint_overall_report.txt)
-         echo "::set-output name=pylint-report::$report_content"
-         echo "Pylint Overall Report:"
-         echo "$report_content"
-
-      - name: Set Output in Summary
-        run: |
-         echo "Pylint Report: ${{ steps.display-report.outputs.pylint-report }}"
+      - name: 📤 Display Markdown Report
+        run: cat pylint_overall_report.txt
