@@ -106,5 +106,3 @@ jobs:
              echo "{markdown_report}=${report_file}" >> $GITHUB_OUTPUT
 
        
-      - name: 📤 Display Markdown Report
-        run: cat pylint_overall_report.txt
