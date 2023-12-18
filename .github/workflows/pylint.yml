@@ -106,12 +106,9 @@ jobs:
              echo "{markdown_report}=${report_file}" >> $GITHUB_OUTPUT
 
       - name: 📤 Display Markdown Report
-        run: echo "{markdown_report}=$(cat pylint_overall_report.txt)" >> $GITHUB_OUTPUT
+        run: echo "::set-output name=markdown_report::$(cat pylint_overall_report.txt)"
         id: display_report
 
       - name: Get Markdown Report
         run: |
-           echo "Markdown Report: ${{ steps.display_report.outputs.markdown_report }}"
-
-
-       
+           echo "Markdown Report: ${{ steps.display_report.outputs.markdown_report }}"       
