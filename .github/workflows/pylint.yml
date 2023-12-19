@@ -107,18 +107,14 @@ jobs:
 
       - name: 📤 Display Markdown Report
         run: echo "::set-output name=markdown_report::$(cat pylint_overall_report.txt)"
-        id: display_report
-
-      - name: Get Markdown Report
-        run: |
-          echo "Markdown Report: ${{ steps.display_report.outputs.markdown_report }}"
 
   display-summary:
     runs-on: ubuntu-22.04
     needs: pylint
     steps:
     - name: Display Pylint Summary
-      run: cat ${{ needs.pylint.outputs.markdown_report }}
+      run: |
+          echo "Markdown Report: ${{ needs.pylint.outputs.markdown_report }}"
 
 
       
