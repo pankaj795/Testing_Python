@@ -106,7 +106,7 @@ jobs:
              echo "{markdown_report}=${report_file}" >> $GITHUB_OUTPUT
 
       - name: 📤 Display Markdown Report
-        run: echo "::set-output name=markdown_report::$(cat pylint_overall_report.txt)"
+        run: echo "{markdown_report} ={$(cat pylint_overall_report.txt)}"
 
   display-summary:
     runs-on: ubuntu-22.04
