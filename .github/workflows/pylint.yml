@@ -1,4 +1,4 @@
-name: Generic Workflow
+name: 🚀Generic Workflow
 
 on:
   push:
@@ -16,36 +16,36 @@ jobs:
       matrix:
         python-version: ["3.10.4"]
     steps:
-      - name: Checkout Code
+      - name: 🔄Checkout Code
         uses: actions/checkout@v2
 
-      - name: Set up Python ${{ matrix.python-version }}
+      - name: 🐍Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v2
         with:
           python-version: ${{ matrix.python-version }}
 
-      - name: Checkout Code
+      - name: 🔄Checkout Code
         uses: actions/checkout@v2
         with:
          fetch-depth: 0
 
           
-      - name: Install dependencies
+      - name: 📦Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install pylint
-      - name: Debug Changed Files
+      - name: 🚥Debug Changed Files
         run: |
              git status
              git log -n 5 --oneline
-      - name: Get changed files
+      - name: 🔄Get changed files
         id: changed-files
         uses: tj-actions/changed-files@v9.2
       
       - name: List all modified files
         run: |
            changed_files="${{ steps.changed-files.outputs.all_modified_files }}"
-           echo "::set-output name=changed_files::${changed_files}"
+           echo "{changed_files}=${changed_files}" >> $GITHUB_OUTPUT
            for file in "${{ steps.changed-files.outputs.all_modified_files }}"; do
                echo "$file was modified"
            done       
@@ -53,10 +53,10 @@ jobs:
            #  id: list_changed_files
            # run: |
            #changed_files=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} -- '**.py')
-           # echo "::set-output name=changed_files::${changed_files}"
+           # echo "{changed_files}=${changed_files}" >> $GITHUB_OUTPUT
       
 
-      - name: Run Pylint and Store Scores backup
+      - name: 🚀Run Pylint and Store Scores backup
         id: run_pylint
         run: |
              changed_files="${{ steps.changed-files.outputs.all_modified_files }}"
@@ -69,7 +69,7 @@ jobs:
                 scores["$file"]=$pylint_score
              done
              report_file="pylint_overall_report.txt"
-             echo "## EDR Linter and Formatter (Overall Report)" > "$report_file"
+             echo "##🌐 EDR Linter and Formatter (Overall Report)" > "$report_file"
              echo "Branch: ${{ github.ref }}" >> "$report_file"
              echo "==========" >> "$report_file"
              echo "Commit chain:" >> "$report_file"
@@ -78,13 +78,13 @@ jobs:
              echo "==========" >> "$report_file"
              echo "Files changed in the latest commit:" >> "$report_file"
              for file in $changed_files; do
-                  echo "$file" >> "$report_file"
-                  echo "Pylint Score for $file: ${scores[$file]}" >> "$report_file"
+                  echo "🌈$file" >> "$report_file"
+                  echo "🔍Pylint Score for $file: ${scores[$file]}" >> "$report_file"
              done
              echo "==========" >> "$report_file"
-             echo "Author: ${{ github.actor }}" >> "$report_file"
-             echo "Reviewer: ${{ github.actor }}" >> "$report_file"
-             echo "Code Quality:" >> "$report_file"
+             echo "👤Author: ${{ github.actor }}" >> "$report_file"
+             echo "👥Reviewer: ${{ github.actor }}" >> "$report_file"
+             echo "📈Code Quality:" >> "$report_file"
              lowest_score=1.0  # Initialize to a high value
              for score in "${scores[@]}"; do
                 if (( $(echo "$score < $lowest_score" | bc -l) )); then
@@ -97,36 +97,18 @@ jobs:
              fi
 
              if [ "$pylint_fail" = true ]; then
-                      echo "    Check Status: Fail" >> "$report_file"
+                      echo "   🚨  Check Status: Fail" >> "$report_file"
              else
-                    echo "    Check Status: Pass" >> "$report_file"
+                    echo "     ✅  Check Status: Pass" >> "$report_file"
              fi
 
-             echo "Markdown report created."
-             echo "::set-output name=markdown_report::$report_file"
+             echo "📝Markdown report created."
+             echo "{markdown_report}=${report_file}" >> $GITHUB_OUTPUT
 
-      - name: Upload test results
-        if: success() || failure()
-        uses: actions/upload-artifact@v2
-        with:
-          name: test-results
-          path: pylint_overall_report.txt
+      - name: 📤 Display Markdown Report
+        run: echo "::set-output name=markdown_report::$(cat pylint_overall_report.txt)"
+        id: display_report
 
-      - name: Create test report
-        uses: ./
-        if: success() || failure()
-        with:
-          name: JEST Tests
-          path: pylint_overall_report.txt
-          reporter: jest-junit
-
-      - name: Create mochawesome report
-        uses: ./
-        if: success() || failure()
-        with:
-          name: Mochawesome Tests
-          path: __tests__/fixtures/mochawesome-json.json
-          reporter: mochawesome-json
-          fail-on-error: false
-
-      
+      - name: Get Markdown Report
+        run: |
+           echo "Markdown Report: ${{ steps.display_report.outputs.markdown_report }}"        
